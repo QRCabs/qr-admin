@@ -5,6 +5,7 @@ import { ErrorMessage, Formik } from "formik";
 import { LoginValidation } from "../../utils/Yup.validation";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginActionTypes } from "./Login.actionTypes";
+import logo from "../../assets/logo.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -34,8 +35,9 @@ function Login() {
     <div className="flex justify-between bg-[url('./login-bg.jpg')] bg-cover bg-center">
       <div></div>
       <div className="w-1/2 h-screen flex justify-center items-center">
-        <div className="w-full bg-white rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
+        <div className="w-full bg-slate-300 rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <img src={logo} className="h-8 ml-[-8px]" />
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Sign in to your account</h1>
             <Formik
               initialValues={{ email: "", password: "" }}
@@ -49,7 +51,6 @@ function Login() {
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting,
                 /* and other goodies */
               }) => (
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
@@ -110,7 +111,7 @@ function Login() {
                   </div>
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    // disabled={isSubmitting}
                     className={`${
                       user?.loading ? "animate-pulse" : ""
                     } w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center`}

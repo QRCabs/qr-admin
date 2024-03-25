@@ -15,13 +15,13 @@ export function* getDriversList(req) {
 
     if (res?.data?.status) {
       yield put({
-        type: DriverActionTypes.GET_ALL_DRIVERS,
-        drivers: res?.data?.data,
+        type: DriverActionTypes.GET_ALL_DRIVERS_SUCCESS,
+        drivers: res?.data,
       });
     } else {
       yield put({
-        type: DriverActionTypes.GET_ALL_DRIVERS_SUCCESS,
-        drivers: res?.data?.data,
+        type: DriverActionTypes.GET_ALL_DRIVERS_FAILED,
+        drivers: res?.data,
       });
     }
   } catch (error) {

@@ -1,14 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import SidebarLinkGroup from "./SidebarLinkGroup";
+// import SidebarLinkGroup from "./SidebarLinkGroup";
 import logo from "../../assets/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginActionTypes } from "../login/Login.actionTypes";
 // import icon1 from "../images/testi.svg";
 // import { isAdmin } from "../utils/Utils";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const location = useLocation();
   const { pathname } = location;
+
+  const signout = () => {
+    dispatch({
+      type: LoginActionTypes.ADMIN_LOGOUT,
+    });
+    navigate("/login");
+  };
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -16,56 +28,18 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === "true");
 
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }) => {
-      if (!sidebar.current || !trigger.current) return;
-      if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target)) return;
-      setSidebarOpen(false);
-    };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
-  });
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }) => {
-      if (!sidebarOpen || keyCode !== 27) return;
-      setSidebarOpen(false);
-    };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
-
-  useEffect(() => {
-    localStorage.setItem("sidebar-expanded", sidebarExpanded);
-    if (sidebarExpanded) {
-      document.querySelector("body").classList.add("sidebar-expanded");
-    } else {
-      document.querySelector("body").classList.remove("sidebar-expanded");
-    }
-  }, [sidebarExpanded]);
-
   return (
-    <div>
-      {/* Sidebar backdrop (mobile only) */}
-      <div
-        className={`fixed inset-0 bg-slate-300 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
-          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        aria-hidden="true"
-      ></div>
-
+    <div className="min-h-dvh">
       {/* Sidebar */}
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-300 p-4 transition-all duration-200 ease-in-out ${
+        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 min-h-dvh h-full overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-300 p-4 transition-all duration-200 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-64"
         }`}
       >
         {/* Sidebar header */}
-        <div className="flex justify-between mb-10 pr-3 sm:px-2">
+        <div className="flex justify-between mb-6 pr-3 sm:px-2">
           {/* Close button */}
           <button
             ref={trigger}
@@ -85,14 +59,16 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </NavLink>
         </div>
 
+        <div className="px-3 pb-4 flex items-center">
+          <p>Hi, {user.name || "User"}</p>
+          <i className="fa-solid fa-right-to-bracket ml-4 hover:text-slate-200" title="Signout" onClick={() => signout()}></i>
+        </div>
+
         {/* Links */}
         <div className="space-y-8">
           {/* Pages group */}
           <div>
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-              <span className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">
-                •••
-              </span>
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Pages</span>
             </h3>
             <ul className="mt-3">

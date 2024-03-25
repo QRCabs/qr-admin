@@ -5,11 +5,12 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { useSelector } from "react-redux";
 import Sidebar from "./components/common/Sidebar";
 import Drivers from "./components/drivers/Drivers";
+import DriverInfo from "./components/drivers/DriverInfo";
 
 const App = () => {
   const userToken = useSelector((state) => state.user)?.token;
   return (
-    <div className="flex">
+    <div className="flex h-full">
       {userToken ? <Sidebar /> : ""}
       <div className="w-full">
         <Routes>
@@ -29,6 +30,15 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Drivers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/viewDriver/:id"
+            exact
+            element={
+              <ProtectedRoute>
+                <DriverInfo />
               </ProtectedRoute>
             }
           />
