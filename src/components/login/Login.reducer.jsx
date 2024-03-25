@@ -1,20 +1,24 @@
-export const Login_Reducer = (state = { token: true }, action) => {
+import { LoginActionTypes } from "./Login.actionTypes";
+
+export const LoginReducer = (state = { token: false }, action) => {
   switch (action.type) {
-    case 1:
+    case LoginActionTypes.ADMIN_LOGIN:
       return {
         loading: true,
       };
 
-    case 2:
+    case LoginActionTypes.ADMIN_LOGIN_SUCCESS:
       return {
         loading: false,
         success: true,
+        ...action.user,
       };
 
-    case 3:
+    case LoginActionTypes.ADMIN_LOGIN_FAILED:
       return {
         loading: false,
         success: false,
+        ...action.user,
       };
 
     default:

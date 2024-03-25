@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import { Login_Reducer } from "./components/login/Login.reducer";
+import { LoginReducer } from "./components/login/Login.reducer";
+import { DriversReducer } from "./components/drivers/Drivers.reducer";
 
 const reducers = combineReducers({
-  user: Login_Reducer,
+  user: LoginReducer,
+  drivers: DriversReducer,
 });
 
 export const rootReducer = (state, action) => reducers(state, action);

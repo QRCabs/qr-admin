@@ -1,0 +1,4 @@
+{
+  "adminLogin": "/api/v1/admin/login",
+  "getDriversList": "/api/v1/admin/getdrivers"
+}
