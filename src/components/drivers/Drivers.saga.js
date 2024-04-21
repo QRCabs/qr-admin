@@ -36,8 +36,8 @@ export function* getDriverInfo(req) {
   try {
     let { payload } = req;
 
-    let res = yield call(endpoint.get, api.getDriverInfo + payload.driverId);
-    // "?driverId=" + "65f6e6aedf626d1919aefe87");
+    let res = yield call(endpoint.get, api.getDriverInfo + "?driverId=" + payload.driverId);
+    // "65f6e6aedf626d1919aefe87");
 
     if (res?.data?.status) {
       yield put({
