@@ -270,6 +270,12 @@ function DriverInfo() {
                         </>
                       )}
                     </div>
+                    {data?.profile?.aadhar_card?.reject_reason && (
+                      <div className="mt-2">
+                        <p className="text-center pt-3">Reject Reason</p>
+                        <p>data?.profile?.aadhar_card?.reject_reason</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </section>
@@ -304,7 +310,7 @@ function DriverInfo() {
                     <label className="font-bold">Verification Status</label>
                     <div
                       className={`flex gap-10 mt-4 ${
-                        data?.profile?.aadhar_card?.verification_status !== "approve" ? "items-center justify-center" : ""
+                        data?.profile?.pan_card?.verification_status !== "approve" ? "items-center justify-center" : ""
                       }`}
                     >
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.pan_card?.verification_status)}`}>
@@ -327,6 +333,12 @@ function DriverInfo() {
                         </>
                       )}
                     </div>
+                    {data?.profile?.pan_card?.reject_reason && (
+                      <div className="mt-2">
+                        <p className="text-center pt-3">Reject Reasone</p>
+                        <p>{data?.profile?.pan_card?.reject_reason}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </section>
@@ -361,7 +373,7 @@ function DriverInfo() {
                     <label className="font-bold">Verification Status</label>
                     <div
                       className={`flex gap-10 mt-4 ${
-                        data?.profile?.aadhar_card?.verification_status !== "approve" ? "items-center justify-center" : ""
+                        data?.profile?.driver_card?.verification_status !== "approve" ? "items-center justify-center" : ""
                       }`}
                     >
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.driver_card?.verification_status)}`}>
@@ -384,6 +396,12 @@ function DriverInfo() {
                         </>
                       )}
                     </div>
+                    {data?.profile?.driver_card?.reject_reason && (
+                      <div className="mt-2">
+                        <p className="text-center pt-3">Reject reason</p>
+                        <p>{data?.profile?.driver_card?.reject_reason}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </section>
@@ -414,6 +432,12 @@ function DriverInfo() {
                       Reject
                     </button>
                   </div>
+                  {data?.vehicleInfo[0]?.reject_reason && (
+                    <div className="mt-2">
+                      <p className="text-center pt-3">Reject Reason</p>
+                      <p>{data?.vehicleInfo[0]?.reject_reason}</p>
+                    </div>
+                  )}
                 </div>
                 <div className="ml-12 flex w-2/3">
                   {data?.vehicleInfo[0]?.vehicle_images?.length &&
