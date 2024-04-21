@@ -32,7 +32,7 @@ function Login() {
   }, [user]);
 
   return (
-    <div className="flex justify-between bg-[url('./login-bg.jpg')] bg-cover bg-center">
+    <div className="flex justify-between bg-[url('https://images.pexels.com/photos/21314159/pexels-photo-21314159/free-photo-of-straight-street-in-city.jpeg')] bg-cover bg-bottom">
       <div></div>
       <div className="w-1/2 h-screen flex justify-center items-center">
         <div className="w-full bg-slate-300 rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
