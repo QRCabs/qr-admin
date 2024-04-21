@@ -5,12 +5,14 @@ import { LoginActionTypes } from "./components/login/Login.actionTypes";
 
 const reducers = combineReducers({
   user: LoginReducer,
-  drivers: DriversReducer,
+  drivers: combineReducers({
+    ...DriversReducer(),
+  }),
 });
 
 export const rootReducer = (state, action) => {
   if (action.type === LoginActionTypes.ADMIN_LOGOUT) {
-    state = undefined;
+    state = {};
   }
   return reducers(state, action);
 };

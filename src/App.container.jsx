@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 import Sidebar from "./components/common/Sidebar";
 import Drivers from "./components/drivers/Drivers";
 import DriverInfo from "./components/drivers/DriverInfo";
+import Dashboard from "./components/Dashboard";
 
 const App = () => {
   const userToken = useSelector((state) => state.user)?.token;
+
   return (
     <div className="flex h-full">
       {userToken ? <Sidebar /> : ""}
@@ -20,7 +22,7 @@ const App = () => {
             exact
             element={
               <ProtectedRoute>
-                <h1>Dashboarnnd</h1>
+                <Dashboard />
               </ProtectedRoute>
             }
           />

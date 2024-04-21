@@ -24,13 +24,13 @@ function Drivers() {
   }, []);
 
   useEffect(() => {
-    if (drivers?.success) {
+    if (drivers?.allDrivers?.success) {
       setState({
         ...state,
-        driversData: drivers.data,
+        driversData: drivers.allDrivers.data,
       });
     }
-    console.log(drivers);
+    console.log(drivers.allDrivers.data);
   }, [drivers]);
 
   return (

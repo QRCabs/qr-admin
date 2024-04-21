@@ -1,4 +1,7 @@
 {
   "adminLogin": "/api/v1/admin/login",
-  "getDriversList": "/api/v1/admin/getdrivers"
+  "getDriversList": "/api/v1/admin/getdrivers",
+  "getDriverInfo": "/api/v1/admin/getdriverinfo",
+  "driverUpdate": "/api/v1/admin/updatestatus",
+  "driverActive": "/api/v1/admin/activeDriver/"
 }
