@@ -7,6 +7,7 @@ import Sidebar from "./components/common/Sidebar";
 import Drivers from "./components/drivers/Drivers";
 import DriverInfo from "./components/drivers/DriverInfo";
 import Dashboard from "./components/Dashboard";
+import FareManagement from "./components/fare/FareManagement";
 
 const App = () => {
   const userToken = useSelector((state) => state.user)?.token;
@@ -41,6 +42,15 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <DriverInfo />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fares"
+            exact
+            element={
+              <ProtectedRoute>
+                <FareManagement />
               </ProtectedRoute>
             }
           />

@@ -3,5 +3,13 @@
   "getDriversList": "/api/v1/admin/getdrivers",
   "getDriverInfo": "/api/v1/admin/getdriverinfo",
   "driverUpdate": "/api/v1/admin/updatestatus",
-  "driverActive": "/api/v1/admin/activeDriver/"
+  "driverActive": "/api/v1/admin/activeDriver/",
+  "getAllCountries": "/api/v1/thirdparties/countries",
+  "getAllStates": "/api/v1/thirdparties/states/",
+  "getAllCities": "/api/v1/thirdparties/cities/",
+  "dailyFares": "/api/v1/vehicleFare/dailyfares",
+  "addDailyFares": "/api/v1/vehicleFare/addDailyFareVehcle",
+  "getVehicleTypes": "/api/v1/vehicles/qrvehicleTypes",
+  "getVehicleModels": "/api/v1/vehicles/qrvehicleModels/",
+  "updateDailyFareVehcle": "/api/v1/vehicleFare/updateDailyFareVehcle/"
 }

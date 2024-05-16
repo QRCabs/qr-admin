@@ -11,6 +11,7 @@ function Drivers() {
     page: 1,
     limit: 10,
     driversData: [],
+    totalRecords: 0,
   });
 
   useEffect(() => {
@@ -21,23 +22,38 @@ function Drivers() {
         limit: state.limit,
       },
     });
-  }, []);
+  }, [state.page]);
 
   useEffect(() => {
     if (drivers?.allDrivers?.success) {
       setState({
         ...state,
-        driversData: drivers.allDrivers.data,
+        totalRecords: drivers.allDrivers?.totalDrivers,
+        driversData: drivers?.allDrivers?.data,
       });
     }
     console.log(drivers.allDrivers.data);
   }, [drivers]);
 
+  const onPageChange = (pageNum) => {
+    setState({
+      ...state,
+      page: pageNum,
+      driversData: [],
+    });
+  };
+
   return (
     <div className="bg-gray-200 h-full py-8 px-4 mx-auto lg:px-12">
       <p className="text-3xl font-semibold pb-3">Drivers</p>
       <span className="">List of All Drivers</span>
-      <DriversDataTable data={state.driversData} />
+      <DriversDataTable
+        data={state.driversData}
+        page={state.page}
+        onPageChange={onPageChange}
+        totalRecords={state.totalRecords}
+        pageSize={state.limit}
+      />
     </div>
   );
 }
