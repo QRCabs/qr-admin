@@ -8,6 +8,7 @@ import Drivers from "./components/drivers/Drivers";
 import DriverInfo from "./components/drivers/DriverInfo";
 import Dashboard from "./components/Dashboard";
 import FareManagement from "./components/fare/FareManagement";
+import SuggestedLocation from "./components/locations/SuggestedLocation";
 
 const App = () => {
   const userToken = useSelector((state) => state.user)?.token;
@@ -51,6 +52,15 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <FareManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/locations"
+            exact
+            element={
+              <ProtectedRoute>
+                <SuggestedLocation />
               </ProtectedRoute>
             }
           />

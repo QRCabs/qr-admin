@@ -7,6 +7,7 @@ export function* login(req) {
   try {
     let res = yield call(endpoint.post, api.adminLogin, req?.payload);
     if (res?.data?.status) {
+      localStorage.setItem("user", JSON.stringify(res?.data?.data));
       yield put({
         type: LoginActionTypes.ADMIN_LOGIN_SUCCESS,
         user: res?.data?.data,

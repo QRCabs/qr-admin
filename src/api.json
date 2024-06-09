@@ -11,5 +11,7 @@
   "addDailyFares": "/api/v1/vehicleFare/addDailyFareVehcle",
   "getVehicleTypes": "/api/v1/vehicles/qrvehicleTypes",
   "getVehicleModels": "/api/v1/vehicles/qrvehicleModels/",
-  "updateDailyFareVehcle": "/api/v1/vehicleFare/updateDailyFareVehcle/"
+  "updateDailyFareVehcle": "/api/v1/vehicleFare/updateDailyFareVehcle/",
+  "getSuggestLocs": "/api/v1/locations/getSuggestLocs",
+  "addSuggestLocs": "/api/v1/locations/createSuggestLoc"
 }
