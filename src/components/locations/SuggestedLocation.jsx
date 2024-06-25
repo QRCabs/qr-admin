@@ -11,6 +11,7 @@ function SuggestedLocation() {
     totalRecords: 0,
     data: [],
     addLoc: false,
+    editData: {},
   });
 
   const getData = () => {
@@ -34,6 +35,21 @@ function SuggestedLocation() {
     });
   };
 
+  const deleteLoc = (id) => {
+    endpoint
+      .delete(api.deleteSuggestLocs + "/" + id)
+      .then((res) => {
+        if (res.data.status) {
+          setState({
+            ...state,
+            data: [],
+          });
+          getData();
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className="px-4 py-8 bg-gray-200 h-full lg:px-12 w-full">
       <div className="flex justify-between pb-8 items-center">
@@ -52,16 +68,21 @@ function SuggestedLocation() {
           page={state.page}
           pageSize={state.limit}
           totalRecords={state.totalRecords}
+          onEdit={(data) => setState({ ...state, editData: data, addLoc: true })}
+          onDelete={(id) => deleteLoc(id)}
         />
       </div>
       <AddModal
         open={state.addLoc}
+        isEdit={Object.keys(state.editData).length > 0}
+        editData={state.editData}
         onClose={(bool) => {
           if (bool) getData();
           setState({
             ...state,
             addLoc: false,
             data: bool ? [] : state.data,
+            editData: {},
           });
         }}
       />

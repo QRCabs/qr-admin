@@ -13,5 +13,7 @@
   "getVehicleModels": "/api/v1/vehicles/qrvehicleModels/",
   "updateDailyFareVehcle": "/api/v1/vehicleFare/updateDailyFareVehcle/",
   "getSuggestLocs": "/api/v1/locations/getSuggestLocs",
-  "addSuggestLocs": "/api/v1/locations/createSuggestLoc"
+  "addSuggestLocs": "/api/v1/locations/createSuggestLoc",
+  "updateSuggestLocs": "/api/v1/locations/updateSuggestLoc",
+  "deleteSuggestLocs": "/api/v1/locations/deleteSuggestLoc"
 }
