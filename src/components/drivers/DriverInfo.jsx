@@ -418,20 +418,27 @@ function DriverInfo() {
                   <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.vehicle_brand}</p>
                   <label className="font-bold">Vehicle Model</label>
                   <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.vehicle_model}</p>
-                  <div className="flex gap-3">
-                    <button
-                      className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
-                      onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-300"
-                      onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
-                    >
-                      Reject
-                    </button>
-                  </div>
+                  {data?.vehicleInfo[0]?.vehicle_status !== "approve" ? (
+                    <div className="flex gap-3">
+                      <button
+                        className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
+                        onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-300"
+                        onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mt-2">
+                      <p className="font-semibold pt-3">Status</p>
+                      <p className="text-green-500">Approved</p>
+                    </div>
+                  )}
                   {data?.vehicleInfo[0]?.reject_reason && (
                     <div className="mt-2">
                       <p className="text-center pt-3">Reject Reason</p>
