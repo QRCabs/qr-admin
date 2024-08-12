@@ -421,13 +421,13 @@ function DriverInfo() {
                   <div className="flex gap-3">
                     <button
                       className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
-                      onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?.driverId })}
+                      onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
                     >
                       Approve
                     </button>
                     <button
                       className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-300"
-                      onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?.driverId })}
+                      onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
                     >
                       Reject
                     </button>
@@ -475,7 +475,7 @@ function DriverInfo() {
                     </div>
                   )}
                   <div className="ml-12 mt-4">
-                    <label className="font-bold">DL No</label>
+                    <label className="font-bold">RC No</label>
                     <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_number}</p>
                     {/* <label className="font-bold">Verification Status</label>
                     <div className="flex gap-10 items-center justify-center mt-4">
