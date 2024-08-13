@@ -204,7 +204,8 @@ function DriverInfo() {
                         type="checkbox"
                         value=""
                         className="sr-only peer"
-                        {...(driverActive ? "checked" : "")}
+                        checked={driverActive}
+                        // {...(driverActive ? "checked" : "")}
                         onClick={() => {
                           setDriverActive(!driverActive);
                           updateDriverStatus(driverId);
@@ -418,15 +419,45 @@ function DriverInfo() {
                   <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.vehicle_brand}</p>
                   <label className="font-bold">Vehicle Model</label>
                   <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.vehicle_model}</p>
+                  <label className="font-bold">Vehicle Number</label>
+                  <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.vehicle_number}</p>
                   {data?.vehicleInfo[0]?.vehicle_status !== "approve" ? (
                     <div className="flex gap-3">
                       <button
+                        disabled={
+                          !data?.vehicleInfo[0]?.vehicle_type ||
+                          !data?.vehicleInfo[0]?.vehicle_brand ||
+                          !data?.vehicleInfo[0]?.vehicle_model ||
+                          !data?.vehicleInfo[0]?.vehicle_number ||
+                          data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
+                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
+                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
+                          !data?.vehicleInfo[0]?.profile?.insurance_card ||
+                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_back ||
+                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_front ||
+                          !data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_front ||
+                          !data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_back
+                        }
                         className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
                         onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
                       >
                         Approve
                       </button>
                       <button
+                        disabled={
+                          !data?.vehicleInfo[0]?.vehicle_type ||
+                          !data?.vehicleInfo[0]?.vehicle_brand ||
+                          !data?.vehicleInfo[0]?.vehicle_model ||
+                          !data?.vehicleInfo[0]?.vehicle_number ||
+                          data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
+                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
+                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
+                          !data?.vehicleInfo[0]?.profile?.insurance_card ||
+                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_back ||
+                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_front ||
+                          !data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_front ||
+                          !data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_back
+                        }
                         className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-300"
                         onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
                       >
@@ -434,9 +465,17 @@ function DriverInfo() {
                       </button>
                     </div>
                   ) : (
-                    <div className="mt-2">
-                      <p className="font-semibold pt-3">Status</p>
-                      <p className="text-green-500">Approved</p>
+                    <div className="flex gap-4 items-end mt-2">
+                      <div>
+                        <p className="font-semibold pt-3">Status</p>
+                        <p className="text-green-500">Approved</p>
+                      </div>
+                      <button
+                        className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
+                        onClick={() => approvalProcess("pending", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
+                      >
+                        Revert to Pending
+                      </button>
                     </div>
                   )}
                   {data?.vehicleInfo[0]?.reject_reason && (
@@ -514,7 +553,7 @@ function DriverInfo() {
                       <p className="text-center pt-3">Front Image</p>
                     </div>
                   )}
-                  {data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back && (
+                  {data?.vehicleInfo[0]?.profile?.rc_card?.insurance_card_image_back && (
                     <div className="mt-4 bg-slate-100 w-100 p-3 rounded-lg">
                       <img
                         src={data?.vehicleInfo[0]?.profile?.insurance_card?.insurance_card_image_back}
