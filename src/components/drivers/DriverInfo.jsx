@@ -429,7 +429,7 @@ function DriverInfo() {
                           !data?.vehicleInfo[0]?.vehicle_brand ||
                           !data?.vehicleInfo[0]?.vehicle_model ||
                           !data?.vehicleInfo[0]?.vehicle_number ||
-                          data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
+                          // data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
                           !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
                           !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
                           !data?.vehicleInfo[0]?.profile?.insurance_card ||
@@ -447,7 +447,7 @@ function DriverInfo() {
                           !data?.vehicleInfo[0]?.vehicle_brand ||
                           !data?.vehicleInfo[0]?.vehicle_model ||
                           !data?.vehicleInfo[0]?.vehicle_number ||
-                          data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
+                          // data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
                           !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
                           !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
                           !data?.vehicleInfo[0]?.profile?.insurance_card ||
