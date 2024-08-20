@@ -424,36 +424,36 @@ function DriverInfo() {
                   {data?.vehicleInfo[0]?.vehicle_status !== "approve" ? (
                     <div className="flex gap-3">
                       <button
-                        disabled={
-                          !data?.vehicleInfo[0]?.vehicle_type ||
-                          !data?.vehicleInfo[0]?.vehicle_brand ||
-                          !data?.vehicleInfo[0]?.vehicle_model ||
-                          !data?.vehicleInfo[0]?.vehicle_number ||
-                          // data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
-                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
-                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
-                          !data?.vehicleInfo[0]?.profile?.insurance_card ||
-                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_back ||
-                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_front
-                        }
+                        // disabled={
+                        //   !data?.vehicleInfo[0]?.vehicle_type ||
+                        //   !data?.vehicleInfo[0]?.vehicle_brand ||
+                        //   !data?.vehicleInfo[0]?.vehicle_model ||
+                        //   !data?.vehicleInfo[0]?.vehicle_number ||
+                        //   // data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
+                        //   !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
+                        //   !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
+                        //   !data?.vehicleInfo[0]?.profile?.insurance_card ||
+                        //   !data?.vehicleInfo[0]?.profile?.insurance_card_image_back ||
+                        //   !data?.vehicleInfo[0]?.profile?.insurance_card_image_front
+                        // }
                         className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
                         onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
                       >
                         Approve
                       </button>
                       <button
-                        disabled={
-                          !data?.vehicleInfo[0]?.vehicle_type ||
-                          !data?.vehicleInfo[0]?.vehicle_brand ||
-                          !data?.vehicleInfo[0]?.vehicle_model ||
-                          !data?.vehicleInfo[0]?.vehicle_number ||
-                          // data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
-                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
-                          !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
-                          !data?.vehicleInfo[0]?.profile?.insurance_card ||
-                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_back ||
-                          !data?.vehicleInfo[0]?.profile?.insurance_card_image_front
-                        }
+                        // disabled={
+                        //   !data?.vehicleInfo[0]?.vehicle_type ||
+                        //   !data?.vehicleInfo[0]?.vehicle_brand ||
+                        //   !data?.vehicleInfo[0]?.vehicle_model ||
+                        //   !data?.vehicleInfo[0]?.vehicle_number ||
+                        //   // data?.vehicleInfo[0]?.vehicle_images?.length < 2 ||
+                        //   !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front ||
+                        //   !data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back ||
+                        //   !data?.vehicleInfo[0]?.profile?.insurance_card ||
+                        //   !data?.vehicleInfo[0]?.profile?.insurance_card_image_back ||
+                        //   !data?.vehicleInfo[0]?.profile?.insurance_card_image_front
+                        // }
                         className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-300"
                         onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
                       >
