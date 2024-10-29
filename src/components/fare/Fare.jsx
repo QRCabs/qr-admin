@@ -28,6 +28,7 @@ function Fare({ data, vehicleTypes, addFareSubmit, fareLoading, cancelAdd, updat
       initialValues={data}
       validationSchema={fareSchema}
       onSubmit={(vals) => {
+        
         if (data?._id === "add") {
           addFareSubmit(vals);
         } else {

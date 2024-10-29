@@ -87,7 +87,7 @@ export const DriverDataApproveReducer = (state = {}, action) => {
   }
 };
 
-const DriverActiveReducer = (state = {}, action) => {
+export const DriverActiveReducer = (state = {}, action) => {
   switch (action.type) {
     case DriverActionTypes.DRIVER_ACTIVE:
       return {

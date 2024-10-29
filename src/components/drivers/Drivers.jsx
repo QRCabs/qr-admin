@@ -12,14 +12,21 @@ function Drivers() {
     limit: 10,
     driversData: [],
     totalRecords: 0,
+    name:"",
+    mobile:"",
+    blocked:'',
+    joinedFrom:"",
+    joinedTo:""
   });
-
   useEffect(() => {
     dispatch({
       type: DriverActionTypes.GET_ALL_DRIVERS,
       payload: {
         page: state.page,
         limit: state.limit,
+        name: state.name,
+        mobile: state.mobile,
+        blocked: state.blocked
       },
     });
   }, [state.page]);
@@ -32,7 +39,7 @@ function Drivers() {
         driversData: drivers?.allDrivers?.data,
       });
     }
-    console.log(drivers.allDrivers.data);
+ 
   }, [drivers]);
 
   const onPageChange = (pageNum) => {

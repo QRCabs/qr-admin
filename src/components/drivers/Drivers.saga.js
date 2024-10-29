@@ -8,10 +8,16 @@ export function* getDriversList(req) {
     let { payload } = req;
     let page = payload.page;
     let limit = payload.limit;
+    let name = payload.name;
+    let mobile = payload.mobile;
+    let blocked = payload.blocked;
+    let joinedFrom = payload.joinedFrom;
+    let joinedTo = payload.joinedTo;
+
     delete payload.page;
     delete payload.limit;
 
-    let res = yield call(endpoint.get, api.getDriversList + "?page=" + page + "&limit=" + limit, payload);
+    let res = yield call(endpoint.get, api.getDriversList + "?page=" + page + "&limit=" + limit + "&name=" + name + "&mobile=" + mobile + "&blocked=" + blocked + "&joinedFrom=" + joinedFrom + "&joinedTo=" + joinedTo, payload);
 
     if (res?.data?.status) {
       yield put({

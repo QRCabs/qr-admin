@@ -1,9 +1,41 @@
 import moment from "moment";
 import { Link } from "react-router-dom";
 import Pagination from "../common/Pagination";
-
+import { useDispatch } from "react-redux";
+import DriverActionTypes from "./Drivers.actionTypes";
+import { Formik, ErrorMessage } from "formik";
+import DatePicker from "react-datepicker";
+import { useState } from "react";
 /* eslint-disable react/prop-types */
 function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) {
+  const dispatch = useDispatch();
+
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const initialValuesObj = {
+    page: page,
+    limit: pageSize,
+    name: "",
+    mobile: "",
+    blocked: '',
+    joinedFrom:"",
+    joinedTo:""
+  }
+
+  const handleRefresh = () => {
+    dispatch({
+      type: DriverActionTypes.GET_ALL_DRIVERS,
+      payload: {
+        page: 1,
+        limit: pageSize,
+      },
+    });
+  }
+
+
+
+
   return (
     <div>
       <section className="py-3 sm:py-5">
@@ -16,10 +48,112 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                   <span className="">{data.length}</span>
                 </h5>
               </div>
+              <>
+                <div className="date-range-picker">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(dates) => {
+                      const [start, end] = dates;
+                      setStartDate(start);
+                      setEndDate(end);
+                    }}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    isClearable
+                    placeholderText="Select date range"
+                    className="date-picker-input"
+                  />
+                </div>
+                <Formik
+                  initialValues={initialValuesObj}
+                  onSubmit={(vals) => {
+                    
+                     vals.joinedFrom = startDate.toISOString()
+                     vals.joinedTo = endDate.toISOString()
+                
+                    dispatch({
+                      type: DriverActionTypes.GET_ALL_DRIVERS,
+                      payload: vals,
+                    });
+                  }}
+                >
+                  {({ values, errors, handleChange, handleBlur, resetForm, setFieldValue, handleSubmit }) => (
+                    <>
+                      <div className="bg-white rounded-lg p-5 text-lg my-4">
+                        <div className="flex justify-between py-4 border-b-2">
+                          <div>
+                            <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
+                              Name
+                            </label>
+                            <input
+                              type="text"
+                              name="name"
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                              // disabled={!isEdit}
+                              value={values?.name}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            />
+                            <div className="text-xs text-red-500 mt-1">
+                              <ErrorMessage name="name" />
+                            </div>
+                          </div>
+                          <div>
+                            <label htmlFor="mobile" className="block mb-2 text-sm font-semibold text-gray-900">
+                              Mobile No:
+                            </label>
+                            <input
+                              type="text"
+                              name="mobile"
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                              // disabled={!isEdit}
+                              value={values?.mobile}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            />
+                            <div className="text-xs text-red-500 mt-1">
+                              <ErrorMessage name="mobile" />
+                            </div>
+                          </div>
+                          <div>
+                            <label htmlFor="blocked" className="block mb-2 text-sm font-semibold text-gray-900">
+                              Blocked User
+                            </label>
+                            <input
+                              type="text"
+                              name="blocked"
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                              // disabled={!isEdit}
+                              value={values?.blocked}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            />
+                            <div className="text-xs text-red-500 mt-1">
+                              <ErrorMessage name="blocked" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="pt-4 flex justify-end gap-8">
+                          <>
+                            <button
+                              className={`bg-blue-500 text-white px-4 py-2 rounded-lg `}
+                              onClick={handleSubmit}
+                            >
+                              Search
+                            </button>
+                          </>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </Formik></>
               <div className="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+
                 <button
                   type="button"
                   className="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+                  onClick={() => { handleRefresh() }}
                 >
                   <svg
                     className="w-4 h-4 mr-2"
@@ -157,7 +291,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                             >
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
-                            <span className="ml-1 text-gray-500 dark:text-gray-400">{dt?.rating + "     / 5" || "NA"}</span>
+                            <span className="ml-1 text-gray-500 dark:text-gray-400">{dt?.totalRatings + "     / 5" || "NA"}</span>
                           </div>
                         </td>
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">{moment(dt.updatedAt).format("DD/MM hh:mm")}</td>
