@@ -4,14 +4,12 @@ import Pagination from "../common/Pagination";
 import { useDispatch } from "react-redux";
 import DriverActionTypes from "./Drivers.actionTypes";
 import { Formik, ErrorMessage } from "formik";
-import DatePicker from "react-datepicker";
+import DatePicker from "react-multi-date-picker"
+
 import { useState } from "react";
 /* eslint-disable react/prop-types */
 function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) {
   const dispatch = useDispatch();
-
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
 
   const initialValuesObj = {
     page: page,
@@ -19,8 +17,8 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
     name: "",
     mobile: "",
     blocked: '',
-    joinedFrom:"",
-    joinedTo:""
+    joinedFrom: "",
+    joinedTo: ""
   }
 
   const handleRefresh = () => {
@@ -29,12 +27,33 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
       payload: {
         page: 1,
         limit: pageSize,
+        name: "",
+        mobile: "",
+        blocked: '',
+        joinedFrom: "",
+        joinedTo: ""
       },
     });
   }
+  const [dateRange, setDateRange] = useState([null, null]);
 
+  // Function to update the date range in a single date picker
+  const handleDateChange = (range) => {
+    setDateRange(range);
+  };
 
+  const getISODateRange = () => {
+    if (dateRange[0] && dateRange[1]) {
+      return [
+        dateRange[0].toDate().toISOString(),
+        dateRange[1].toDate().toISOString(),
+      ];
+    }
+    return [null, null];
+  };
 
+  const isoDateRange = getISODateRange();
+  console.log(dateRange[0]?.format("MM/DD/YYYY"), "FromdateRange", dateRange[1]?.format("MM/DD/YYYY"), "toDate")
 
   return (
     <div>
@@ -49,29 +68,46 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                 </h5>
               </div>
               <>
-                <div className="date-range-picker">
+              <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
+                              Dates
+                            </label>
+                <div style={{
+          display: "flex",
+          alignItems: "center",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          padding: "8px 12px",
+          width: "260px",
+          cursor: "pointer",
+          backgroundColor: "#fff",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+        }}>
+          
                   <DatePicker
-                    selected={startDate}
-                    onChange={(dates) => {
-                      const [start, end] = dates;
-                      setStartDate(start);
-                      setEndDate(end);
+                    value={dateRange}
+                    onChange={handleDateChange}
+                    range
+                    format="MM/DD/YYYY"
+                    placeholder="Select Date Range"
+                    portal // Renders the calendar in a portal to avoid positioning issues
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      width: "100%",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      color: "#333",
                     }}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    isClearable
-                    placeholderText="Select date range"
-                    className="date-picker-input"
+                    containerStyle={{
+                      width: "100%",
+                    }}
                   />
                 </div>
                 <Formik
                   initialValues={initialValuesObj}
                   onSubmit={(vals) => {
-                    
-                     vals.joinedFrom = startDate.toISOString()
-                     vals.joinedTo = endDate.toISOString()
-                
+                    vals.joinedFrom = isoDateRange[0]
+                    vals.joinedTo = isoDateRange[1]
                     dispatch({
                       type: DriverActionTypes.GET_ALL_DRIVERS,
                       payload: vals,
