@@ -24,15 +24,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
   const handleRefresh = () => {
     dispatch({
       type: DriverActionTypes.GET_ALL_DRIVERS,
-      payload: {
-        page: 1,
-        limit: pageSize,
-        name: "",
-        mobile: "",
-        blocked: '',
-        joinedFrom: "",
-        joinedTo: ""
-      },
+      payload: initialValuesObj,
     });
   }
   const [dateRange, setDateRange] = useState([null, null]);
@@ -106,6 +98,11 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                 <Formik
                   initialValues={initialValuesObj}
                   onSubmit={(vals) => {
+                    vals.page = page,
+                    vals.limit= pageSize,
+                    vals.name =vals.name,
+                    vals.mobile = vals.mobile,
+                    vals.blocked = vals.blocked,
                     vals.joinedFrom = isoDateRange[0]
                     vals.joinedTo = isoDateRange[1]
                     dispatch({
