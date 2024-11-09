@@ -4,7 +4,7 @@ import Pagination from "../common/Pagination";
 import { useDispatch } from "react-redux";
 import DriverActionTypes from "./Drivers.actionTypes";
 import { Formik, ErrorMessage } from "formik";
-import DatePicker from "react-multi-date-picker"
+import DatePicker from "react-multi-date-picker";
 
 import { useState } from "react";
 /* eslint-disable react/prop-types */
@@ -16,17 +16,17 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
     limit: pageSize,
     name: "",
     mobile: "",
-    blocked: '',
+    blocked: "",
     joinedFrom: "",
-    joinedTo: ""
-  }
+    joinedTo: "",
+  };
 
   const handleRefresh = () => {
     dispatch({
       type: DriverActionTypes.GET_ALL_DRIVERS,
       payload: initialValuesObj,
     });
-  }
+  };
   const [dateRange, setDateRange] = useState([null, null]);
 
   // Function to update the date range in a single date picker
@@ -36,16 +36,13 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
 
   const getISODateRange = () => {
     if (dateRange[0] && dateRange[1]) {
-      return [
-        dateRange[0].toDate().toISOString(),
-        dateRange[1].toDate().toISOString(),
-      ];
+      return [dateRange[0].toDate().toISOString(), dateRange[1].toDate().toISOString()];
     }
     return [null, null];
   };
 
   const isoDateRange = getISODateRange();
-  console.log(dateRange[0]?.format("MM/DD/YYYY"), "FromdateRange", dateRange[1]?.format("MM/DD/YYYY"), "toDate")
+  console.log(dateRange[0]?.format("MM/DD/YYYY"), "FromdateRange", dateRange[1]?.format("MM/DD/YYYY"), "toDate");
 
   return (
     <div>
@@ -60,27 +57,29 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                 </h5>
               </div>
               <>
-              <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
-                              Dates
-                            </label>
-                <div style={{
-          display: "flex",
-          alignItems: "center",
-          border: "1px solid #ccc",
-          borderRadius: "5px",
-          padding: "8px 12px",
-          width: "260px",
-          cursor: "pointer",
-          backgroundColor: "#fff",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-        }}>
-          
+                <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
+                  Dates
+                </label>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    padding: "8px 12px",
+                    width: "260px",
+                    cursor: "pointer",
+                    backgroundColor: "#fff",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
                   <DatePicker
                     value={dateRange}
                     onChange={handleDateChange}
                     range
                     format="MM/DD/YYYY"
                     placeholder="Select Date Range"
+                    closeCalendarOnClickOutside // Closes the calendar when clicked somewhere else on screen
                     portal // Renders the calendar in a portal to avoid positioning issues
                     style={{
                       border: "none",
@@ -98,13 +97,13 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                 <Formik
                   initialValues={initialValuesObj}
                   onSubmit={(vals) => {
-                    vals.page = page,
-                    vals.limit= pageSize,
-                    vals.name =vals.name,
-                    vals.mobile = vals.mobile,
-                    vals.blocked = vals.blocked,
-                    vals.joinedFrom = isoDateRange[0]
-                    vals.joinedTo = isoDateRange[1]
+                    (vals.page = page),
+                      (vals.limit = pageSize),
+                      (vals.name = vals.name),
+                      (vals.mobile = vals.mobile),
+                      (vals.blocked = vals.blocked),
+                      (vals.joinedFrom = isoDateRange[0]);
+                    vals.joinedTo = isoDateRange[1];
                     dispatch({
                       type: DriverActionTypes.GET_ALL_DRIVERS,
                       payload: vals,
@@ -114,7 +113,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                   {({ values, errors, handleChange, handleBlur, resetForm, setFieldValue, handleSubmit }) => (
                     <>
                       <div className="bg-white rounded-lg p-5 text-lg my-4">
-                        <div className="flex justify-between py-4 border-b-2">
+                        <div className="flex justify-between py-4 gap-5 items-center">
                           <div>
                             <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
                               Name
@@ -166,13 +165,8 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                               <ErrorMessage name="blocked" />
                             </div>
                           </div>
-                        </div>
-                        <div className="pt-4 flex justify-end gap-8">
                           <>
-                            <button
-                              className={`bg-blue-500 text-white px-4 py-2 rounded-lg `}
-                              onClick={handleSubmit}
-                            >
+                            <button className={`bg-blue-500 h-fit text-white px-4 py-2 rounded-lg `} onClick={handleSubmit}>
                               Search
                             </button>
                           </>
@@ -180,13 +174,15 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                       </div>
                     </>
                   )}
-                </Formik></>
+                </Formik>
+              </>
               <div className="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-
                 <button
                   type="button"
                   className="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
-                  onClick={() => { handleRefresh() }}
+                  onClick={() => {
+                    handleRefresh();
+                  }}
                 >
                   <svg
                     className="w-4 h-4 mr-2"
@@ -205,7 +201,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                   </svg>
                   Refresh
                 </button>
-                <button
+                {/* <button
                   type="button"
                   className="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 "
                 >
@@ -225,7 +221,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                     />
                   </svg>
                   Export
-                </button>
+                </button> */}
               </div>
             </div>
             <div className="overflow-x-auto">
