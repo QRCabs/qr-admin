@@ -10,7 +10,7 @@ import { useState } from "react";
 /* eslint-disable react/prop-types */
 function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) {
   const dispatch = useDispatch();
-
+  
   const initialValuesObj = {
     page: page,
     limit: pageSize,
@@ -19,14 +19,19 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
     blocked: "",
     joinedFrom: "",
     joinedTo: "",
+    activeDrivers: "",
   };
+  
+  const [selectedTab, setSelectedTab] = useState("All");
+  const [filters, setFilters] = useState(initialValuesObj);
 
-  const handleRefresh = () => {
+  const handleGetData = (payload) => {
     dispatch({
       type: DriverActionTypes.GET_ALL_DRIVERS,
-      payload: initialValuesObj,
+      payload: payload ? payload : initialValuesObj,
     });
   };
+
   const [dateRange, setDateRange] = useState([null, null]);
 
   // Function to update the date range in a single date picker
@@ -41,8 +46,33 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
     return [null, null];
   };
 
+  const handleTab = (filter) => {
+    setSelectedTab(filter);
+  
+    let obj = { ...initialValuesObj };
+  
+    switch (filter) {
+      case "Blocked":
+        obj.blocked = true;
+        break;
+      case "Unblocked":
+        obj.blocked = false;
+        break;
+      case "Verified":
+        obj.activeDrivers = true;
+        break;
+      case "Unverified":
+        obj.activeDrivers = false;
+        break;
+      default:
+        break;
+    }
+
+    setFilters(obj);
+    handleGetData(obj);
+  };
+
   const isoDateRange = getISODateRange();
-  console.log(dateRange[0]?.format("MM/DD/YYYY"), "FromdateRange", dateRange[1]?.format("MM/DD/YYYY"), "toDate");
 
   return (
     <div>
@@ -97,12 +127,11 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                 <Formik
                   initialValues={initialValuesObj}
                   onSubmit={(vals) => {
-                    (vals.page = page),
-                      (vals.limit = pageSize),
-                      (vals.name = vals.name),
-                      (vals.mobile = vals.mobile),
-                      (vals.blocked = vals.blocked),
-                      (vals.joinedFrom = isoDateRange[0]);
+                    vals.page = 1;
+                    vals.limit = pageSize;
+                    if(filters.blocked !== "") vals.blocked = filters.blocked;
+                    if(filters.activeDrivers !== "") vals.activeDrivers = filters.activeDrivers;
+                    vals.joinedFrom = isoDateRange[0];
                     vals.joinedTo = isoDateRange[1];
                     dispatch({
                       type: DriverActionTypes.GET_ALL_DRIVERS,
@@ -148,23 +177,6 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                               <ErrorMessage name="mobile" />
                             </div>
                           </div>
-                          <div>
-                            <label htmlFor="blocked" className="block mb-2 text-sm font-semibold text-gray-900">
-                              Blocked User
-                            </label>
-                            <input
-                              type="text"
-                              name="blocked"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                              // disabled={!isEdit}
-                              value={values?.blocked}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                            />
-                            <div className="text-xs text-red-500 mt-1">
-                              <ErrorMessage name="blocked" />
-                            </div>
-                          </div>
                           <>
                             <button className={`bg-blue-500 h-fit text-white px-4 py-2 rounded-lg `} onClick={handleSubmit}>
                               Search
@@ -181,7 +193,8 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                   type="button"
                   className="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
                   onClick={() => {
-                    handleRefresh();
+                    onPageChange(1);
+                    handleRefresh({ ...filters, page: 1 });
                   }}
                 >
                   <svg
@@ -222,6 +235,25 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                   </svg>
                   Export
                 </button> */}
+              </div>
+            </div>
+            <div className="flex my-4">
+              <div class="inline-flex rounded-md shadow-sm">
+                <button onClick={() => handleTab("All")} className={`${selectedTab === "All" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                  All
+                </button>
+                <button onClick={() => handleTab("Blocked")} className={`${selectedTab === "Blocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                  Blocked
+                </button>
+                <button onClick={() => handleTab("Unblocked")} className={`${selectedTab === "Unblocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                  Unblocked
+                </button>
+                <button onClick={() => handleTab("Verified")} className={`${selectedTab === "Verified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                  Verified
+                </button>
+                <button onClick={() => handleTab("Unverified")} className={`${selectedTab === "Unverified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                  Unverified
+                </button>
               </div>
             </div>
             <div className="overflow-x-auto">
