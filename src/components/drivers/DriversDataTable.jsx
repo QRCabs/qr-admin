@@ -8,22 +8,8 @@ import DatePicker from "react-multi-date-picker";
 
 import { useState } from "react";
 /* eslint-disable react/prop-types */
-function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) {
+function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, initialValuesObj, setSelectedTab, selectedTab, filters, setFilters }) {
   const dispatch = useDispatch();
-  
-  const initialValuesObj = {
-    page: page,
-    limit: pageSize,
-    name: "",
-    mobile: "",
-    blocked: "",
-    joinedFrom: "",
-    joinedTo: "",
-    activeDrivers: "",
-  };
-  
-  const [selectedTab, setSelectedTab] = useState("All");
-  const [filters, setFilters] = useState(initialValuesObj);
 
   const handleGetData = (payload) => {
     dispatch({
@@ -237,7 +223,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords }) 
                 </button> */}
               </div>
             </div>
-            <div className="flex my-4">
+            <div className="flex mx-4 my-4">
               <div class="inline-flex rounded-md shadow-sm">
                 <button onClick={() => handleTab("All")} className={`${selectedTab === "All" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
                   All

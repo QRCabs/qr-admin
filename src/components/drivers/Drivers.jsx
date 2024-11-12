@@ -7,28 +7,34 @@ import DriversDataTable from "./DriversDataTable";
 function Drivers() {
   const dispatch = useDispatch();
   const drivers = useSelector((state) => state.drivers);
+  
+  const [selectedTab, setSelectedTab] = useState("All");
+  const [filters, setFilters] = useState(initialValuesObj);
   const [state, setState] = useState({
     page: 1,
     limit: 10,
     driversData: [],
-    totalRecords: 0,
-    name:"",
-    mobile:"",
-    blocked:'',
-    joinedFrom:"",
-    joinedTo:""
+    totalRecords: 0
   });
+  
+  const initialValuesObj = {
+    page: state.page,
+    limit: state.pageSize,
+    name: "",
+    mobile: "",
+    blocked: "",
+    joinedFrom: "",
+    joinedTo: "",
+    activeDrivers: "",
+  };
+
   useEffect(() => {
     dispatch({
       type: DriverActionTypes.GET_ALL_DRIVERS,
       payload: {
+        ...filters,
         page: state.page,
         limit: state.limit,
-        name: state.name,
-        mobile: state.mobile,
-        blocked: state.blocked,
-         joinedFrom:"",
-    joinedTo:""
       },
     });
   }, [state.page]);
@@ -62,6 +68,11 @@ function Drivers() {
         onPageChange={onPageChange}
         totalRecords={state.totalRecords}
         pageSize={state.limit}
+        setFilters={setFilters}
+        filters={filters}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+        initialValuesObj={initialValuesObj}
       />
     </div>
   );
