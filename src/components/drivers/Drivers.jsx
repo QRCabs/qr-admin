@@ -9,7 +9,6 @@ function Drivers() {
   const drivers = useSelector((state) => state.drivers);
   
   const [selectedTab, setSelectedTab] = useState("All");
-  const [filters, setFilters] = useState(initialValuesObj);
   const [state, setState] = useState({
     page: 1,
     limit: 10,
@@ -27,6 +26,8 @@ function Drivers() {
     joinedTo: "",
     activeDrivers: "",
   };
+  
+  const [filters, setFilters] = useState(initialValuesObj);
 
   useEffect(() => {
     dispatch({
