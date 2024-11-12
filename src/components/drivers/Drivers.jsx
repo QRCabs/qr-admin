@@ -11,14 +11,14 @@ function Drivers() {
   const [selectedTab, setSelectedTab] = useState("All");
   const [state, setState] = useState({
     page: 1,
-    limit: 10,
+    limit: 15,
     driversData: [],
     totalRecords: 0
   });
   
   const initialValuesObj = {
     page: state.page,
-    limit: state.pageSize,
+    limit: 15,
     name: "",
     mobile: "",
     blocked: "",
@@ -26,7 +26,7 @@ function Drivers() {
     joinedTo: "",
     activeDrivers: "",
   };
-  
+
   const [filters, setFilters] = useState(initialValuesObj);
 
   useEffect(() => {
