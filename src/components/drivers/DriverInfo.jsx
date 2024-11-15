@@ -28,7 +28,7 @@ function DriverInfo() {
       case "approve":
         return "text-green-500";
       case "rejected":
-        case "reject":
+      case "reject":
         return "text-red-500";
       default:
         return "text-black";
@@ -104,7 +104,6 @@ function DriverInfo() {
   };
 
   const isDriverDocApproved = () => {
-
     return (
       data?.profile?.pan_card?.verification_status !== "pending" &&
       data?.profile?.aadhar_card?.verification_status !== "pending" &&
@@ -142,7 +141,13 @@ function DriverInfo() {
             <section>
               <p className="text-lg font-semibold">Driver Profile</p>
               <div className="mt-4 flex">
-                <img src={data?.profile_image || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                <img
+                  src={data?.profile_image?.profile_image_url || "https://picsum.photos/seed/picsum/200/200"}
+                  width={"200px"}
+                  height={"200px"}
+                  alt="User Img"
+                  className="rounded-lg"
+                />
                 <div className="ml-8">
                   <label className="font-bold">Driver Name</label>
                   <p className="mt-2 mb-6">{data?.fullname}</p>
@@ -172,10 +177,10 @@ function DriverInfo() {
                   <p className="mt-2 mb-6">
                     {data?.languages?.length
                       ? data.languages?.map((l, i) => (
-                        <span key={i} className={`text-sm font-medium me-2 px-2.5 py-0.5 rounded ${badgeColor[Math.floor(Math.random() * 4)]}`}>
-                          {l}
-                        </span>
-                      ))
+                          <span key={i} className={`text-sm font-medium me-2 px-2.5 py-0.5 rounded ${badgeColor[Math.floor(Math.random() * 4)]}`}>
+                            {l}
+                          </span>
+                        ))
                       : "NA"}
                   </p>
                 </div>
@@ -223,16 +228,25 @@ function DriverInfo() {
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">Aadhar Card</p>
                 <div className="flex gap-10">
-                  <img src={data?.profile?.aadhar_card?.aadhar_card_image_front || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
-                  <img src={data?.profile?.aadhar_card?.aadhar_card_image_back || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                  <img
+                    src={data?.profile?.aadhar_card?.aadhar_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
+                  <img
+                    src={data?.profile?.aadhar_card?.aadhar_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Aadhar Card No</label>
                     <p className="mt-2 mb-6">{data?.profile?.aadhar_card?.aadhar_card_number}</p>
                     <label className="font-bold">Verification Status</label>
-                    <div
-                      className={`flex gap-10 mt-4 ${data?.profile?.aadhar_card?.verification_status !== "approve" ? "" : ""
-                        }`}
-                    >
+                    <div className={`flex gap-10 mt-4 ${data?.profile?.aadhar_card?.verification_status !== "approve" ? "" : ""}`}>
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.aadhar_card?.verification_status)}`}>
                         {data?.profile?.aadhar_card?.verification_status}
                       </p>
@@ -267,14 +281,21 @@ function DriverInfo() {
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">Pan Card</p>
                 <div className="flex gap-10">
-                  <img src={data?.profile?.pan_card?.pan_card_image_front || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                  <img
+                    src={data?.profile?.pan_card?.pan_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Pan Card No</label>
                     <p className="mt-2 mb-6">{data?.profile?.pan_card?.pan_card_number}</p>
                     <label className="font-bold">Verification Status</label>
                     <div
-                      className={`flex gap-10 mt-4 ${data?.profile?.pan_card?.verification_status !== "approve" ? "items-center justify-center" : ""
-                        }`}
+                      className={`flex gap-10 mt-4 ${
+                        data?.profile?.pan_card?.verification_status !== "approve" ? "items-center justify-center" : ""
+                      }`}
                     >
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.pan_card?.verification_status)}`}>
                         {data?.profile?.pan_card?.verification_status}
@@ -310,16 +331,25 @@ function DriverInfo() {
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">Driving Licensce</p>
                 <div className="flex gap-10">
-                  <img src={data?.profile?.driver_card?.driver_card_image_front || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
-                  <img src={data?.profile?.driver_card?.driver_card_image_back || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                  <img
+                    src={data?.profile?.driver_card?.driver_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
+                  <img
+                    src={data?.profile?.driver_card?.driver_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">DL No</label>
                     <p className="mt-2 mb-6">{data?.profile?.driver_card?.driver_card_number}</p>
                     <label className="font-bold">Verification Status</label>
-                    <div
-                      className={`flex gap-10 mt-4 ${data?.profile?.driver_card?.verification_status !== "approve" ? "" : ""
-                        }`}
-                    >
+                    <div className={`flex gap-10 mt-4 ${data?.profile?.driver_card?.verification_status !== "approve" ? "" : ""}`}>
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.driver_card?.verification_status)}`}>
                         {data?.profile?.driver_card?.verification_status}
                       </p>
@@ -417,22 +447,21 @@ function DriverInfo() {
                       </button>
                     </div>
                   )}
-              
+
                   {data?.vehicleInfo[0]?.reject_reason && (
-                      <div className="mt-5">
-                        <label className="font-bold">Reject Reason</label>
-                        <p className="mt-2 mb-6 text-red-500">{data?.vehicleInfo[0]?.reject_reason}</p>
-                      </div>
-                    )}
+                    <div className="mt-5">
+                      <label className="font-bold">Reject Reason</label>
+                      <p className="mt-2 mb-6 text-red-500">{data?.vehicleInfo[0]?.reject_reason}</p>
+                    </div>
+                  )}
                 </div>
                 <div className="ml-12 flex w-2/3">
-                  {
-                    data?.vehicleInfo[0]?.vehicle_images.map((ele, idx) => (
-                      <div key={idx} className="mt-4 mr-4 bg-slate-100 w-100 p-3 rounded-lg">
-                        <img src={ele.url} alt="" onClick={() => window.open(ele.url)} />
-                        <p className="text-center pt-3">{ele.filename}</p>
-                      </div>
-                    ))}
+                  {data?.vehicleInfo[0]?.vehicle_images.map((ele, idx) => (
+                    <div key={idx} className="mt-4 mr-4 bg-slate-100 w-100 p-3 rounded-lg">
+                      <img src={ele.url} alt="" onClick={() => window.open(ele.url)} />
+                      <p className="text-center pt-3">{ele.filename}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </section>
@@ -440,8 +469,20 @@ function DriverInfo() {
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">RC</p>
                 <div className="flex gap-10">
-                  <img src={data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
-                  <img src={data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
 
                   <div className="ml-12 mt-4">
                     <label className="font-bold">RC No</label>
@@ -466,8 +507,20 @@ function DriverInfo() {
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">Insurance</p>
                 <div className="flex gap-10">
-                  <img src={data?.vehicleInfo[0]?.profile?.insurance_card?.insurance_card_image_front || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
-                  <img src={data?.vehicleInfo[0]?.profile?.rc_card?.insurance_card_image_back || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.insurance_card?.insurance_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.rc_card?.insurance_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
 
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Insurance Card No.</label>
@@ -492,8 +545,20 @@ function DriverInfo() {
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">Tax Card</p>
                 <div className="flex gap-10">
-                  <img src={data?.vehicleInfo[0]?.profile?.tax_card?.tax_card_image_front || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
-                  <img src={data?.vehicleInfo[0]?.profile?.tax_card?.tax_card_image_back || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.tax_card?.tax_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.tax_card?.tax_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Tax Card No.</label>
                     <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.profile?.tax_card?.tax_card_number}</p>
@@ -517,8 +582,20 @@ function DriverInfo() {
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">Fitness</p>
                 <div className="flex gap-10">
-                  <img src={data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_front || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
-                  <img src={data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_back || "https://picsum.photos/seed/picsum/200/200"} width={'200px'} height={'200px'} alt="User Img" className="rounded-lg" />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
+                  <img
+                    src={data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
+                    width={"200px"}
+                    height={"200px"}
+                    alt="User Img"
+                    className="rounded-lg"
+                  />
 
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Fitness Card No.</label>

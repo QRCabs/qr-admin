@@ -293,7 +293,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                         <td className="w-4 px-4 py-3">{i + 1}</td>
                         <th scope="row" className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                           <img
-                            src={dt.profile_image || "https://picsum.photos/seed/picsum/200/300"}
+                            src={dt.profile_image?.profile_image_url || "https://picsum.photos/seed/picsum/200/300"}
                             alt="Profile Image"
                             className="w-8 h-8 mr-3 rounded-2xl"
                           />
