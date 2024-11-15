@@ -360,7 +360,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                         </td>
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">{moment(dt.updatedAt).format("DD/MM hh:mm")}</td>
                         <td className="px-4 py-2 font-medium text-blue-700 whitespace-nowrap cursor-pointer">
-                          <Link to={"/viewDriver/" + dt._id}>View Details</Link>
+                          <Link to={"/viewDriver/" + dt.driverId}>View Details</Link>
                         </td>
                       </tr>
                     ))}
