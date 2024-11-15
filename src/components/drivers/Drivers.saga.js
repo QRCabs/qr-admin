@@ -17,7 +17,25 @@ export function* getDriversList(req) {
     delete payload.page;
     delete payload.limit;
 
-    let res = yield call(endpoint.get, api.getDriversList + "?page=" + page + "&limit=" + limit + "&name=" + name + "&mobile=" + mobile + "&blocked=" + blocked + "&joinedFrom=" + joinedFrom + "&joinedTo=" + joinedTo, payload);
+    let res = yield call(
+      endpoint.get,
+      api.getDriversList +
+        "?page=" +
+        page +
+        "&limit=" +
+        limit +
+        "&name=" +
+        name +
+        "&mobile=" +
+        mobile +
+        "&blocked=" +
+        blocked +
+        "&joinedFrom=" +
+        joinedFrom +
+        "&joinedTo=" +
+        joinedTo,
+      payload
+    );
 
     if (res?.data?.status) {
       yield put({
@@ -42,7 +60,7 @@ export function* getDriverInfo(req) {
   try {
     let { payload } = req;
 
-    let res = yield call(endpoint.get, api.getDriverInfo + "?driverId=" + payload.driverId);
+    let res = yield call(endpoint.get, api.getDriverInfo + "/" + payload.driverId);
     // "65f6e6aedf626d1919aefe87");
 
     if (res?.data?.status) {

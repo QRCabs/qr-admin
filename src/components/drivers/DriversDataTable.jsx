@@ -34,9 +34,9 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
 
   const handleTab = (filter) => {
     setSelectedTab(filter);
-  
+
     let obj = { ...initialValuesObj };
-  
+
     switch (filter) {
       case "Blocked":
         obj.blocked = true;
@@ -115,8 +115,8 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                   onSubmit={(vals) => {
                     vals.page = 1;
                     vals.limit = pageSize;
-                    if(filters.blocked !== "") vals.blocked = filters.blocked;
-                    if(filters.activeDrivers !== "") vals.activeDrivers = filters.activeDrivers;
+                    if (filters.blocked !== "") vals.blocked = filters.blocked;
+                    if (filters.activeDrivers !== "") vals.activeDrivers = filters.activeDrivers;
                     vals.joinedFrom = isoDateRange[0];
                     vals.joinedTo = isoDateRange[1];
                     dispatch({
@@ -225,19 +225,36 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
             </div>
             <div className="flex mx-4 my-4">
               <div class="inline-flex rounded-md shadow-sm">
-                <button onClick={() => handleTab("All")} className={`${selectedTab === "All" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                <button
+                  onClick={() => handleTab("All")}
+                  className={`${
+                    selectedTab === "All" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
+                  } px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
+                >
                   All
                 </button>
-                <button onClick={() => handleTab("Blocked")} className={`${selectedTab === "Blocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                <button
+                  onClick={() => handleTab("Blocked")}
+                  className={`${
+                    selectedTab === "Blocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
+                  } px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
+                >
                   Blocked
                 </button>
-                <button onClick={() => handleTab("Unblocked")} className={`${selectedTab === "Unblocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
-                  Unblocked
-                </button>
-                <button onClick={() => handleTab("Verified")} className={`${selectedTab === "Verified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                <button
+                  onClick={() => handleTab("Verified")}
+                  className={`${
+                    selectedTab === "Verified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
+                  } px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
+                >
                   Verified
                 </button>
-                <button onClick={() => handleTab("Unverified")} className={`${selectedTab === "Unverified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"} px-4 py-2 text-sm font-medium border border-gray-200 rounded-r-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}>
+                <button
+                  onClick={() => handleTab("Unverified")}
+                  className={`${
+                    selectedTab === "Unverified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
+                  } px-4 py-2 text-sm font-medium border border-gray-200 rounded-r-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
+                >
                   Unverified
                 </button>
               </div>
