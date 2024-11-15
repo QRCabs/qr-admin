@@ -6,7 +6,7 @@ import DriverActionTypes from "./Drivers.actionTypes";
 import { Formik, ErrorMessage } from "formik";
 import DatePicker from "react-multi-date-picker";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 /* eslint-disable react/prop-types */
 function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, initialValuesObj, setSelectedTab, selectedTab, filters, setFilters }) {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
   // Function to update the date range in a single date picker
   const handleDateChange = (range) => {
     setDateRange(range);
+    handleGetData({ ...filters, joinedFrom: range[0], joinedTo: range[1] });
   };
 
   const getISODateRange = () => {
@@ -60,6 +61,12 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
 
   const isoDateRange = getISODateRange();
 
+  useEffect(() => {
+    if (document.querySelector(".rmdp-input")) {
+      document.querySelector(".rmdp-input").classList.add("!bg-gray-50");
+    }
+  }, []);
+
   return (
     <div>
       <section className="py-3 sm:py-5">
@@ -69,46 +76,37 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
               <div className="flex items-center flex-1 space-x-4">
                 <h5>
                   <span className="text-gray-500">All Drivers: </span>
-                  <span className="">{data.length}</span>
+                  <span className="">{totalRecords}</span>
                 </h5>
               </div>
               <>
-                <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
-                  Dates
-                </label>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    padding: "8px 12px",
-                    width: "260px",
-                    cursor: "pointer",
-                    backgroundColor: "#fff",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  <DatePicker
-                    value={dateRange}
-                    onChange={handleDateChange}
-                    range
-                    format="MM/DD/YYYY"
-                    placeholder="Select Date Range"
-                    closeCalendarOnClickOutside // Closes the calendar when clicked somewhere else on screen
-                    portal // Renders the calendar in a portal to avoid positioning issues
-                    style={{
-                      border: "none",
-                      outline: "none",
-                      width: "100%",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      color: "#333",
-                    }}
-                    containerStyle={{
-                      width: "100%",
-                    }}
-                  />
+                <div>
+                  <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
+                    Dates
+                  </label>
+                  <div className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fit p-[0.45rem] ">
+                    <DatePicker
+                      value={dateRange}
+                      onChange={handleDateChange}
+                      range
+                      format="MM/DD/YYYY"
+                      placeholder="Select Date Range"
+                      closeCalendarOnClickOutside // Closes the calendar when clicked somewhere else on screen
+                      portal // Renders the calendar in a portal to avoid positioning issues
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        width: "100%",
+                        cursor: "pointer",
+                        fontSize: "14px",
+                        color: "#333",
+                      }}
+                      containerStyle={{
+                        backgroundColor: "#f9fafb",
+                        // width: "100%",
+                      }}
+                    />
+                  </div>
                 </div>
                 <Formik
                   initialValues={initialValuesObj}
@@ -127,7 +125,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                 >
                   {({ values, errors, handleChange, handleBlur, resetForm, setFieldValue, handleSubmit }) => (
                     <>
-                      <div className="bg-white rounded-lg p-5 text-lg my-4">
+                      <div className="bg-white rounded-lg p-5 text-lg !m-0">
                         <div className="flex justify-between py-4 gap-5 items-center">
                           <div>
                             <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
@@ -137,10 +135,14 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               type="text"
                               name="name"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                              // disabled={!isEdit}
                               value={values?.name}
                               onChange={handleChange}
                               onBlur={handleBlur}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  handleSubmit();
+                                }
+                              }}
                             />
                             <div className="text-xs text-red-500 mt-1">
                               <ErrorMessage name="name" />
@@ -158,13 +160,18 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               value={values?.mobile}
                               onChange={handleChange}
                               onBlur={handleBlur}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  handleSubmit();
+                                }
+                              }}
                             />
                             <div className="text-xs text-red-500 mt-1">
                               <ErrorMessage name="mobile" />
                             </div>
                           </div>
                           <>
-                            <button className={`bg-blue-500 h-fit text-white px-4 py-2 rounded-lg `} onClick={handleSubmit}>
+                            <button className={`bg-blue-500 h-fit mt-5 text-white px-4 py-2 rounded-lg `} onClick={handleSubmit}>
                               Search
                             </button>
                           </>
@@ -177,7 +184,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
               <div className="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button
                   type="button"
-                  className="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+                  className="flex mt-5 items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
                   onClick={() => {
                     onPageChange(1);
                     handleGetData({ ...filters, page: 1 });
@@ -367,7 +374,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                 </tbody>
               </table>
             </div>
-            <Pagination currentPage={page} totalPages={Math.ceil(totalRecords / pageSize)} onPageChange={onPageChange} />
+            <Pagination currentPage={page} totalRecords={totalRecords} totalPages={Math.ceil(totalRecords / pageSize)} onPageChange={onPageChange} />
           </div>
         </div>
       </section>

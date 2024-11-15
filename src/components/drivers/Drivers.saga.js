@@ -5,37 +5,17 @@ import DriverActionTypes from "./Drivers.actionTypes";
 
 export function* getDriversList(req) {
   try {
-    let { payload } = req;
-    let page = payload.page;
-    let limit = payload.limit;
-    let name = payload.name;
-    let mobile = payload.mobile;
-    let blocked = payload.blocked;
-    let joinedFrom = payload.joinedFrom;
-    let joinedTo = payload.joinedTo;
-
-    delete payload.page;
-    delete payload.limit;
-
-    let res = yield call(
-      endpoint.get,
-      api.getDriversList +
-        "?page=" +
-        page +
-        "&limit=" +
-        limit +
-        "&name=" +
-        name +
-        "&mobile=" +
-        mobile +
-        "&blocked=" +
-        blocked +
-        "&joinedFrom=" +
-        joinedFrom +
-        "&joinedTo=" +
-        joinedTo,
-      payload
-    );
+    const { payload } = req;
+    const query = Object.keys(payload).reduce((acc, key) => {
+      console.log(payload[key], payload);
+      if (key !== "page" && key !== "limit" && payload[key] !== undefined && payload[key] !== "") {
+        return { ...acc, [key]: payload[key] };
+      }
+      return acc;
+    }, {});
+    const queryString = new URLSearchParams(query).toString();
+    const url = `${api.getDriversList}?page=${payload.page}&limit=${payload.limit}${queryString ? `&${queryString}` : ""}`;
+    const res = yield call(endpoint.get, url);
 
     if (res?.data?.status) {
       yield put({

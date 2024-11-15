@@ -1,6 +1,6 @@
 import React from "react";
 
-function Pagination({ currentPage, totalPages, onPageChange }) {
+function Pagination({ currentPage, totalPages, onPageChange, totalRecords }) {
   // Function to handle previous page click
   const handlePreviousClick = () => {
     if (currentPage > 1) {
@@ -25,7 +25,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         Showing
         <span className="font-semibold text-gray-900">{(currentPage - 1) * 10 + 1}</span>-{Math.min(currentPage * 10, totalPages * 10)}
         of
-        <span className="font-semibold text-gray-900">{totalPages * 10}</span>
+        <span className="font-semibold text-gray-900">{totalRecords || totalPages * 10}</span>
       </span>
       <ul className="inline-flex items-stretch -space-x-px">
         <li>
