@@ -273,7 +273,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                       Mobile
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Status
+                      Profile Status
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Rating
