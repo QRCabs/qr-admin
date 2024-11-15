@@ -13,13 +13,11 @@ function DriverInfo() {
   // "65f6e6aedf626d1919aefe87" || ;
   const driverInfo = useSelector((state) => state?.drivers?.driverInfo);
   const driverApprove = useSelector((state) => state?.drivers?.driverApprove);
-  const driverActiveR = useSelector((state) => state?.drivers?.driverActive);
 
   const [data, setData] = useState({});
   const [approveType, setApproveType] = useState("");
   const [approvalPopup, setApprovalPopup] = useState(false);
   const [approvalDoc, setApprovalDoc] = useState({});
-  const [driverActive, setDriverActive] = useState(true);
 
   const getStatusColor = (val) => {
     switch (val) {
@@ -66,15 +64,9 @@ function DriverInfo() {
   useEffect(() => {
     if (driverInfo?.status) {
       setData(driverInfo.data);
-      setDriverActive(driverInfo?.data?.result?.status);
     }
   }, [driverInfo]);
 
-  useEffect(() => {
-    if (!driverActiveR?.status) {
-      setDriverActive(!driverActive);
-    }
-  }, [driverActiveR]);
 
   const approveDoc = (payload) => {
     dispatch({
@@ -101,6 +93,7 @@ function DriverInfo() {
         id,
       },
     });
+    getDriverInfo();
   };
 
   const isDriverDocApproved = () => {
@@ -112,7 +105,15 @@ function DriverInfo() {
   };
 
   const badgeColor = ["bg-blue-100 text-blue-800", "bg-green-100 text-green-800", "bg-yellow-100 text-yellow-800", "bg-slate-100 text-slate-800s"];
+  const [switchState, setSwitchState] = useState(data);
 
+  const handleSwitchChange = (id) => {
+    setSwitchState((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+    updateDriverStatus(id);
+  };
   return (
     <>
       {Object.keys(data).length === 0 ? (
@@ -187,39 +188,25 @@ function DriverInfo() {
                 <div className="ml-12 flex flex-col">
                   <label className="font-bold">Approve Driver</label>
                   <div className="flex gap-4 mt-4">
-                    {/* <button
-                      // disabled={isDriverDocApproved()}
-                      className={`${
-                        isDriverDocApproved() ? "bg-green-600" : "bg-green-300 cursor-not-allowed"
-                      } text-white px-5 py-2 rounded-lg hover:bg-green-300`}
-                      // onClick={() => approvalProcess("approve", { doc_type: "pan", doc_id: data?.profile?.pan_card?._id })}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className={`${
-                        isDriverDocApproved() ? "bg-red-600" : "bg-red-300 cursor-not-allowed"
-                      } text-white px-5 py-2 rounded-lg hover:bg-green-red`}
-                      // disabled={isDriverDocApproved()}
-                      // onClick={() => approvalProcess("reject", { doc_type: "pan", doc_id: data?.profile?.pan_card?._id })}
-                    >
-                      Reject
-                    </button> */}
-                    <label className="inline-flex items-center mb-5 cursor-pointer">
+                  <label className="switch">
+                            <input
+                              type="checkbox"
+                              checked={data.isProfileVerified|| false}
+                              onChange={() => handleSwitchChange(driverId)}
+                            />
+                            <span className="slider"></span>
+                          </label>
+                    {/* <label className="inline-flex items-center mb-5 cursor-pointer">
                       <input
                         type="checkbox"
                         value=""
                         className="sr-only peer"
-                        checked={driverActive}
-                        // {...(driverActive ? "checked" : "")}
-                        onClick={() => {
-                          setDriverActive(!driverActive);
-                          updateDriverStatus(driverId);
-                        }}
+                        checked={data.isProfileVerified || false}
+                              onChange={() => handleSwitchChange(driverId)}
                       />
                       <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                       <span className="ms-3 text-sm capitalize font-medium text-gray-600">{driverActive ? "Active" : "Inactive"}</span>
-                    </label>
+                    </label> */}
                   </div>
                 </div>
               </div>

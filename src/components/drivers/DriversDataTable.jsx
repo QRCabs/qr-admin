@@ -1,11 +1,11 @@
 import moment from "moment";
 import { Link } from "react-router-dom";
 import Pagination from "../common/Pagination";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DriverActionTypes from "./Drivers.actionTypes";
 import { Formik, ErrorMessage } from "formik";
 import DatePicker from "react-multi-date-picker";
-
+import "./Driver.css"
 import { useEffect, useState } from "react";
 /* eslint-disable react/prop-types */
 function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, initialValuesObj, setSelectedTab, selectedTab, filters, setFilters }) {
@@ -67,13 +67,48 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
     }
   }, []);
 
+
+  const updateDriverStatus = (id) => {
+    dispatch({
+      type: DriverActionTypes.DRIVER_ACTIVE,
+      payload: {
+        id,
+      },
+    });
+  };
+
+  const [switchState, setSwitchState] = useState({});
+
+  const handleSwitchChange = (id) => {
+    setSwitchState((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+    dispatch({
+      type: DriverActionTypes.DRIVER_ACTIVE,
+      payload: {
+        id,
+      }
+    })
+    if (driverActiveR) {
+      dispatch({
+        type: DriverActionTypes.GET_ALL_DRIVERS,
+        payload: initialValuesObj,
+      });
+    }
+
+  };
+  const [blockDriver, setBlockDriver] = useState(null);
+  const handleBlockDriver = (event) => {
+    setBlockDriver(event.target.value);
+  };
   return (
     <div>
       <section className="py-3 sm:py-5">
         <div className="max-w-screen-2xl">
           <div className="relative overflow-hidden bg-white shadow-md  sm:rounded-lg">
             <div className="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-              <div className="flex items-center flex-1 space-x-4">
+            <div className="flex items-center flex-1 space-x-4">
                 <h5>
                   <span className="text-gray-500">All Drivers: </span>
                   <span className="">{totalRecords}</span>
@@ -155,8 +190,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                             <input
                               type="text"
                               name="mobile"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                              // disabled={!isEdit}
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
                               value={values?.mobile}
                               onChange={handleChange}
                               onBlur={handleBlur}
@@ -170,6 +204,28 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               <ErrorMessage name="mobile" />
                             </div>
                           </div>
+                          <div>
+                            <label htmlFor="mobile" className="block mb-2 text-sm font-semibold text-gray-900">
+                            Vehicle No:
+                            </label>
+                            <input
+                              type="text"
+                              name="vehicle_number"
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+                              value={values?.mobile}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  handleSubmit();
+                                }
+                              }}
+                            />
+                            <div className="text-xs text-red-500 mt-1">
+                              <ErrorMessage name="vehicle_number" />
+                            </div>
+                          </div>
+                          
                           <>
                             <button className={`bg-blue-500 h-fit mt-5 text-white px-4 py-2 rounded-lg `} onClick={handleSubmit}>
                               Search
@@ -177,6 +233,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                           </>
                         </div>
                       </div>
+
                     </>
                   )}
                 </Formik>
@@ -286,10 +343,16 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                       Rating
                     </th>
                     <th scope="col" className="px-4 py-3">
+                      Vehicle No
+                    </th>
+                    <th scope="col" className="px-4 py-3">
                       Last Update
                     </th>
                     <th scope="col" className="px-4 py-3">
                       View Details
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -309,15 +372,12 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                         <td className="px-4 py-2">
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt.mobile}</span>
                         </td>
-                        <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className={`inline-block w-4 h-4 mr-2 rounded-full ${dt?.isProfileVerified ? "bg-green-700" : "bg-red-700"}`}></div>
-                            {dt?.isProfileVerified ? "Verified" : "Not Verified"}
-                          </div>
+                        <td className="px-4 py-2">
+                          
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt.result?.status}</span>
                         </td>
-                        <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <svg
+                        <td className="px-4 py-2">
+                        <div className="flex"><span><svg
                               aria-hidden="true"
                               className="w-5 h-5 text-yellow-400"
                               fill="currentColor"
@@ -325,49 +385,28 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg
-                              aria-hidden="true"
-                              className="w-5 h-5 text-yellow-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg
-                              aria-hidden="true"
-                              className="w-5 h-5 text-yellow-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg
-                              aria-hidden="true"
-                              className="w-5 h-5 text-yellow-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg
-                              aria-hidden="true"
-                              className="w-5 h-5 text-yellow-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <span className="ml-1 text-gray-500 dark:text-gray-400">{dt?.totalRatings + "     / 5" || "NA"}</span>
-                          </div>
+                            </svg></span>
+                        <span className="ml-1 text-gray-500 dark:text-gray-400">{dt?.averageRating}</span>
+                        </div>
+                          {/* <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt.averageRating}</span> */}
                         </td>
+                        <td className="px-4 py-2">
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt?.vehicleInfo?.vehicle_number}</span>
+                        </td>
+
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">{moment(dt.updatedAt).format("DD/MM hh:mm")}</td>
                         <td className="px-4 py-2 font-medium text-blue-700 whitespace-nowrap cursor-pointer">
                           <Link to={"/viewDriver/" + dt.driverId}>View Details</Link>
+                        </td>
+                        <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                          <label className="switch">
+                            <input
+                              type="checkbox"
+                              checked={dt.isProfileVerified|| false}
+                              onChange={() => handleSwitchChange(dt.driverId)}
+                            />
+                            <span className="slider"></span>
+                          </label>
                         </td>
                       </tr>
                     ))}

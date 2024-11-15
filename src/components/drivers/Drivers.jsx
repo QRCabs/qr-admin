@@ -9,6 +9,7 @@ function Drivers() {
   const drivers = useSelector((state) => state.drivers);
   
   const [selectedTab, setSelectedTab] = useState("All");
+  const driverActiveR = useSelector((state) => state?.drivers?.driverActive);
   const [state, setState] = useState({
     page: 1,
     limit: 15,
@@ -38,7 +39,7 @@ function Drivers() {
         limit: state.limit,
       },
     });
-  }, [state.page]);
+  }, [state.page,driverActiveR]);
 
   useEffect(() => {
     if (drivers?.allDrivers?.success) {
@@ -74,6 +75,8 @@ function Drivers() {
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
         initialValuesObj={initialValuesObj}
+        setState={setState}
+        stateData={state}
       />
     </div>
   );
