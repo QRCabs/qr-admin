@@ -445,9 +445,9 @@ function DriverInfo() {
                 </div>
                 <div className="ml-12 flex w-2/3">
                   {data?.vehicleInfo[0]?.vehicle_images.map((ele, idx) => (
-                    <div key={idx} className="mt-4 mr-4 bg-slate-100 w-100 p-3 rounded-lg">
-                      <img src={ele.url} alt="" onClick={() => window.open(ele.url)} />
-                      <p className="text-center pt-3">{ele.filename}</p>
+                    <div key={idx} className="flex gap-10">
+                      <img src={ele.url} alt=""  width={"200px"} className="rounded-lg"
+                    height={"200px"} onClick={() => window.open(ele.url)} />
                     </div>
                   ))}
                 </div>
