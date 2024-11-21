@@ -152,6 +152,12 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                     if (filters.activeDrivers !== "") vals.activeDrivers = filters.activeDrivers;
                     vals.joinedFrom = isoDateRange[0];
                     vals.joinedTo = isoDateRange[1];
+                    if(vals.joinedFrom === null){
+                      delete vals.joinedFrom
+                    }
+                    if(vals.joinedTo === null){
+                      delete vals.joinedTo
+                    }
                     dispatch({
                       type: DriverActionTypes.GET_ALL_DRIVERS,
                       payload: vals,
@@ -171,6 +177,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               name="name"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                               value={values?.name}
+                              placeholder="Search by Name"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               onKeyDown={(e) => {
@@ -192,6 +199,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               name="mobile"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
                               value={values?.mobile}
+                              placeholder="Search by Mobile"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               onKeyDown={(e) => {
@@ -210,9 +218,10 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                             </label>
                             <input
                               type="text"
-                              name="vehicle_number"
+                              name="vehicleName"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-                              value={values?.vehicle_number}
+                              value={values?.vehicleName}
+                              placeholder="Search by Vehicle Number"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               onKeyDown={(e) => {
@@ -222,7 +231,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               }}
                             />
                             <div className="text-xs text-red-500 mt-1">
-                              <ErrorMessage name="vehicle_number" />
+                              <ErrorMessage name="vehicleName" />
                             </div>
                           </div>
                           
@@ -293,34 +302,36 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                   onClick={() => handleTab("All")}
                   className={`${
                     selectedTab === "All" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
-                  } px-4 py-2 text-sm font-medium border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
+                  } px-4 py-2 text-sm font-medium border border-gray-200`}
                 >
-                  All
-                </button>
-                <button
-                  onClick={() => handleTab("Blocked")}
-                  className={`${
-                    selectedTab === "Blocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
-                  } px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
-                >
-                  Blocked
+                  All  <span className="">{ selectedTab === "All" && `(${totalRecords})`}</span>
                 </button>
                 <button
                   onClick={() => handleTab("Verified")}
                   className={`${
                     selectedTab === "Verified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
-                  } px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
+                  } px-4 py-2 text-sm font-medium border border-gray-200 `}
                 >
-                  Verified
+                  Verified  <span className="">{ selectedTab === "Verified" && `(${totalRecords})`}</span>
                 </button>
                 <button
                   onClick={() => handleTab("Unverified")}
                   className={`${
                     selectedTab === "Unverified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
-                  } px-4 py-2 text-sm font-medium border border-gray-200 rounded-r-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700`}
+                  } px-4 py-2 text-sm font-medium border border-gray-200 rounded-r-lg `}
                 >
-                  Unverified
+                  Unverified   <span className="">{ selectedTab === "Unverified" && `(${totalRecords})`}</span>
                 </button>
+                <button
+                  onClick={() => handleTab("Blocked")}
+                  className={`${
+                    selectedTab === "Blocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
+                  } px-4 py-2 text-sm font-medium border border-gray-200 `}
+                >
+                  Blocked  <span className="">{ selectedTab === "Blocked" && `(${totalRecords})`}</span>
+                </button>
+                
+                
               </div>
             </div>
             <div className="overflow-x-auto">
@@ -402,7 +413,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                           <label className="switch">
                             <input
                               type="checkbox"
-                              checked={dt.isProfileVerified|| false}
+                              checked={dt.platform_accepted|| false}
                               onChange={() => handleSwitchChange(dt.driverId)}
                             />
                             <span className="slider"></span>
