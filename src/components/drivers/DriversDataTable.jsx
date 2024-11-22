@@ -108,12 +108,12 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
         <div className="max-w-screen-2xl">
           <div className="relative overflow-hidden bg-white shadow-md  sm:rounded-lg">
             <div className="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-            <div className="flex items-center flex-1 space-x-4">
+            {/* <div className="flex items-center flex-1 space-x-4">
                 <h5>
                   <span className="text-gray-500">All Drivers: </span>
                   <span className="">{totalRecords}</span>
                 </h5>
-              </div>
+              </div> */}
               <>
                 <div>
                   <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900">
