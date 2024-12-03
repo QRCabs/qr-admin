@@ -217,7 +217,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                             </label>
                             <input
                               type="text"
-                              name="vehicleName"
+                              name="vehicleNumber"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
                               value={values?.vehicleNumber}
                               placeholder="Search by Vehicle Number"
