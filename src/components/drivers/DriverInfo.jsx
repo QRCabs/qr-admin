@@ -67,7 +67,6 @@ function DriverInfo() {
     }
   }, [driverInfo]);
 
-
   const approveDoc = (payload) => {
     dispatch({
       type: DriverActionTypes.DRIVER_DATA_APPROVE,
@@ -114,7 +113,6 @@ function DriverInfo() {
     }));
     updateDriverStatus(id);
   };
-  console.log(driverInfo,"driverInfo")
   return (
     <>
       {Object.keys(data).length === 0 ? (
@@ -189,14 +187,10 @@ function DriverInfo() {
                 <div className="ml-12 flex flex-col">
                   <label className="font-bold">Approve Driver</label>
                   <div className="flex gap-4 mt-4">
-                  <label className="switch">
-                            <input
-                              type="checkbox"
-                              checked={driverInfo?.data?.platform_accepted}
-                              onChange={() => handleSwitchChange(driverId)}
-                            />
-                            <span className="slider"></span>
-                          </label>
+                    <label className="switch">
+                      <input type="checkbox" checked={driverInfo?.data?.platform_accepted} onChange={() => handleSwitchChange(driverId)} />
+                      <span className="slider"></span>
+                    </label>
                     {/* <label className="inline-flex items-center mb-5 cursor-pointer">
                       <input
                         type="checkbox"
@@ -215,20 +209,20 @@ function DriverInfo() {
             {data?.profile?.aadhar_card && (
               <section className="border-t-2 mt-6">
                 <p className="text-lg font-semibold mt-4">Aadhar Card</p>
-                <div className="flex gap-10">
+                <div className="flex">
                   <img
                     src={data?.profile?.aadhar_card?.aadhar_card_image_front || "https://picsum.photos/seed/picsum/200/200"}
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <img
                     src={data?.profile?.aadhar_card?.aadhar_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Aadhar Card No</label>
@@ -274,7 +268,7 @@ function DriverInfo() {
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Pan Card No</label>
@@ -324,14 +318,14 @@ function DriverInfo() {
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <img
                     src={data?.profile?.driver_card?.driver_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">DL No</label>
@@ -446,8 +440,7 @@ function DriverInfo() {
                 <div className="ml-12 flex w-2/3">
                   {data?.vehicleInfo[0]?.vehicle_images.map((ele, idx) => (
                     <div key={idx} className="flex gap-10">
-                      <img src={ele.url} alt=""  width={"200px"} className="rounded-lg"
-                    height={"200px"} onClick={() => window.open(ele.url)} />
+                      <img src={ele.url} alt="" width={"200px"} className="rounded-lg" height={"200px"} onClick={() => window.open(ele.url)} />
                     </div>
                   ))}
                 </div>
@@ -462,14 +455,14 @@ function DriverInfo() {
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <img
                     src={data?.vehicleInfo[0]?.profile?.rc_card?.rc_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
 
                   <div className="ml-12 mt-4">
@@ -500,14 +493,14 @@ function DriverInfo() {
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <img
                     src={data?.vehicleInfo[0]?.profile?.rc_card?.insurance_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
 
                   <div className="ml-12 mt-4">
@@ -538,14 +531,14 @@ function DriverInfo() {
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <img
                     src={data?.vehicleInfo[0]?.profile?.tax_card?.tax_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <div className="ml-12 mt-4">
                     <label className="font-bold">Tax Card No.</label>
@@ -575,14 +568,14 @@ function DriverInfo() {
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
                   <img
                     src={data?.vehicleInfo[0]?.profile?.fitness_card?.fitness_card_image_back || "https://picsum.photos/seed/picsum/200/200"}
                     width={"200px"}
                     height={"200px"}
                     alt="User Img"
-                    className="rounded-lg"
+                    className="mx-14 rounded-lg -rotate-90"
                   />
 
                   <div className="ml-12 mt-4">
