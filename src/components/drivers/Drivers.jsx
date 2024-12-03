@@ -7,16 +7,16 @@ import DriversDataTable from "./DriversDataTable";
 function Drivers() {
   const dispatch = useDispatch();
   const drivers = useSelector((state) => state.drivers);
-  
+
   const [selectedTab, setSelectedTab] = useState("All");
   const driverActiveR = useSelector((state) => state?.drivers?.driverActive);
   const [state, setState] = useState({
     page: 1,
     limit: 15,
     driversData: [],
-    totalRecords: 0
+    totalRecords: 0,
   });
-  
+
   const initialValuesObj = {
     page: state.page,
     limit: 15,
@@ -26,6 +26,7 @@ function Drivers() {
     joinedFrom: "",
     joinedTo: "",
     activeDrivers: "",
+    vehicleNumber: "",
   };
 
   const [filters, setFilters] = useState(initialValuesObj);
@@ -39,7 +40,7 @@ function Drivers() {
         limit: state.limit,
       },
     });
-  }, [state.page,driverActiveR]);
+  }, [state.page, driverActiveR]);
 
   useEffect(() => {
     if (drivers?.allDrivers?.success) {
@@ -49,7 +50,6 @@ function Drivers() {
         driversData: drivers?.allDrivers?.data,
       });
     }
- 
   }, [drivers]);
 
   const onPageChange = (pageNum) => {

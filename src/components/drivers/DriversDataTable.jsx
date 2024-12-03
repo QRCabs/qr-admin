@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DriverActionTypes from "./Drivers.actionTypes";
 import { Formik, ErrorMessage } from "formik";
 import DatePicker from "react-multi-date-picker";
-import "./Driver.css"
+import "./Driver.css";
 import { useEffect, useState } from "react";
 /* eslint-disable react/prop-types */
 function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, initialValuesObj, setSelectedTab, selectedTab, filters, setFilters }) {
@@ -67,7 +67,6 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
     }
   }, []);
 
-
   const updateDriverStatus = (id) => {
     dispatch({
       type: DriverActionTypes.DRIVER_ACTIVE,
@@ -88,15 +87,14 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
       type: DriverActionTypes.DRIVER_ACTIVE,
       payload: {
         id,
-      }
-    })
+      },
+    });
     if (driverActiveR) {
       dispatch({
         type: DriverActionTypes.GET_ALL_DRIVERS,
         payload: initialValuesObj,
       });
     }
-
   };
   const [blockDriver, setBlockDriver] = useState(null);
   const handleBlockDriver = (event) => {
@@ -108,7 +106,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
         <div className="max-w-screen-2xl">
           <div className="relative overflow-hidden bg-white shadow-md  sm:rounded-lg">
             <div className="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-            {/* <div className="flex items-center flex-1 space-x-4">
+              {/* <div className="flex items-center flex-1 space-x-4">
                 <h5>
                   <span className="text-gray-500">All Drivers: </span>
                   <span className="">{totalRecords}</span>
@@ -124,6 +122,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                       value={dateRange}
                       onChange={handleDateChange}
                       range
+                      editable={false}
                       format="MM/DD/YYYY"
                       placeholder="Select Date Range"
                       closeCalendarOnClickOutside // Closes the calendar when clicked somewhere else on screen
@@ -152,11 +151,11 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                     if (filters.activeDrivers !== "") vals.activeDrivers = filters.activeDrivers;
                     vals.joinedFrom = isoDateRange[0];
                     vals.joinedTo = isoDateRange[1];
-                    if(vals.joinedFrom === null){
-                      delete vals.joinedFrom
+                    if (vals.joinedFrom === null) {
+                      delete vals.joinedFrom;
                     }
-                    if(vals.joinedTo === null){
-                      delete vals.joinedTo
+                    if (vals.joinedTo === null) {
+                      delete vals.joinedTo;
                     }
                     dispatch({
                       type: DriverActionTypes.GET_ALL_DRIVERS,
@@ -214,13 +213,13 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                           </div>
                           <div>
                             <label htmlFor="mobile" className="block mb-2 text-sm font-semibold text-gray-900">
-                            Vehicle No:
+                              Vehicle No:
                             </label>
                             <input
                               type="text"
                               name="vehicleName"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-                              value={values?.vehicleName}
+                              value={values?.vehicleNumber}
                               placeholder="Search by Vehicle Number"
                               onChange={handleChange}
                               onBlur={handleBlur}
@@ -231,10 +230,10 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                               }}
                             />
                             <div className="text-xs text-red-500 mt-1">
-                              <ErrorMessage name="vehicleName" />
+                              <ErrorMessage name="vehicleNumber" />
                             </div>
                           </div>
-                          
+
                           <>
                             <button className={`bg-blue-500 h-fit mt-5 text-white px-4 py-2 rounded-lg `} onClick={handleSubmit}>
                               Search
@@ -242,7 +241,6 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                           </>
                         </div>
                       </div>
-
                     </>
                   )}
                 </Formik>
@@ -304,7 +302,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                     selectedTab === "All" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
                   } px-4 py-2 text-sm font-medium border border-gray-200`}
                 >
-                  All  <span className="">{ selectedTab === "All" && `(${totalRecords})`}</span>
+                  All <span className="">{selectedTab === "All" && `(${totalRecords})`}</span>
                 </button>
                 <button
                   onClick={() => handleTab("Verified")}
@@ -312,7 +310,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                     selectedTab === "Verified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
                   } px-4 py-2 text-sm font-medium border border-gray-200 `}
                 >
-                  Verified  <span className="">{ selectedTab === "Verified" && `(${totalRecords})`}</span>
+                  Verified <span className="">{selectedTab === "Verified" && `(${totalRecords})`}</span>
                 </button>
                 <button
                   onClick={() => handleTab("Unverified")}
@@ -320,7 +318,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                     selectedTab === "Unverified" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
                   } px-4 py-2 text-sm font-medium border border-gray-200 rounded-r-lg `}
                 >
-                  Unverified   <span className="">{ selectedTab === "Unverified" && `(${totalRecords})`}</span>
+                  Unverified <span className="">{selectedTab === "Unverified" && `(${totalRecords})`}</span>
                 </button>
                 <button
                   onClick={() => handleTab("Blocked")}
@@ -328,10 +326,8 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                     selectedTab === "Blocked" ? "text-white bg-blue-700" : "text-blue-700 bg-white"
                   } px-4 py-2 text-sm font-medium border border-gray-200 `}
                 >
-                  Blocked  <span className="">{ selectedTab === "Blocked" && `(${totalRecords})`}</span>
+                  Blocked <span className="">{selectedTab === "Blocked" && `(${totalRecords})`}</span>
                 </button>
-                
-                
               </div>
             </div>
             <div className="overflow-x-auto">
@@ -384,25 +380,29 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt.mobile}</span>
                         </td>
                         <td className="px-4 py-2">
-                          
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt.result?.status}</span>
                         </td>
                         <td className="px-4 py-2">
-                        <div className="flex"><span><svg
-                              aria-hidden="true"
-                              className="w-5 h-5 text-yellow-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg></span>
-                        <span className="ml-1 text-gray-500 dark:text-gray-400">{dt?.averageRating}</span>
-                        </div>
+                          <div className="flex">
+                            <span>
+                              <svg
+                                aria-hidden="true"
+                                className="w-5 h-5 text-yellow-400"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            </span>
+                            <span className="ml-1 text-gray-500 dark:text-gray-400">{dt?.averageRating}</span>
+                          </div>
                           {/* <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt.averageRating}</span> */}
                         </td>
                         <td className="px-4 py-2">
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">{dt?.vehicleInfo?.vehicle_number}</span>
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded">
+                            {dt?.vehicleInfo?.vehicle_number}
+                          </span>
                         </td>
 
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">{moment(dt.updatedAt).format("DD/MM hh:mm")}</td>
@@ -411,11 +411,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                         </td>
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                           <label className="switch">
-                            <input
-                              type="checkbox"
-                              checked={dt.platform_accepted|| false}
-                              onChange={() => handleSwitchChange(dt.driverId)}
-                            />
+                            <input type="checkbox" checked={dt.platform_accepted || false} onChange={() => handleSwitchChange(dt.driverId)} />
                             <span className="slider"></span>
                           </label>
                         </td>

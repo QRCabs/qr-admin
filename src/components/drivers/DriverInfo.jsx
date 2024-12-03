@@ -382,7 +382,7 @@ function DriverInfo() {
                   <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.vehicle_model}</p>
                   <label className="font-bold">Vehicle Number</label>
                   <p className="mt-2 mb-6">{data?.vehicleInfo[0]?.vehicle_number}</p>
-                  {data?.vehicleInfo[0]?.vehicle_status !== "approve" ? (
+                  {data?.vehicleInfo[0]?.vehicle_status !== "approved" ? (
                     <div className="flex gap-3">
                       <button
                         // disabled={
@@ -398,7 +398,7 @@ function DriverInfo() {
                         //   !data?.vehicleInfo[0]?.profile?.insurance_card_image_front
                         // }
                         className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
-                        onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
+                        onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?.vehicleId })}
                       >
                         Approve
                       </button>
@@ -416,7 +416,7 @@ function DriverInfo() {
                         //   !data?.vehicleInfo[0]?.profile?.insurance_card_image_front
                         // }
                         className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-300"
-                        onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
+                        onClick={() => approvalProcess("reject", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?.vehicleId })}
                       >
                         Reject
                       </button>
@@ -429,7 +429,7 @@ function DriverInfo() {
                       </div>
                       <button
                         className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
-                        onClick={() => approvalProcess("pending", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?._id })}
+                        onClick={() => approvalProcess("pending", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?.vehicleId })}
                       >
                         Revert to Pending
                       </button>

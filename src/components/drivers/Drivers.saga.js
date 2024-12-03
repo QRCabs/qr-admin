@@ -7,7 +7,6 @@ export function* getDriversList(req) {
   try {
     const { payload } = req;
     const query = Object.keys(payload).reduce((acc, key) => {
-      console.log(payload[key], payload);
       if (key !== "page" && key !== "limit" && payload[key] !== undefined && payload[key] !== "") {
         return { ...acc, [key]: payload[key] };
       }
