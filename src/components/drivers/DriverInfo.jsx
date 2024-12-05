@@ -255,10 +255,6 @@ function DriverInfo() {
                         </>
                       ) : (
                         <div className="flex gap-4 items-end mt-2">
-                          <div>
-                            <p className="font-semibold pt-3">Status</p>
-                            <p className="text-green-500">Approved</p>
-                          </div>
                           <button
                             className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
                             onClick={() => approvalProcess("pending", { doc_type: "aadhar", doc_id: driverId })}
@@ -268,12 +264,12 @@ function DriverInfo() {
                         </div>
                       )}
                     </div>
-                    {data?.profile?.aadhar_card?.reject_reason && (
+                    {data?.profile?.aadhar_card?.reject_reason && data?.profile?.aadhar_card?.verification_status === "reject" ? (
                       <div className="mt-5">
                         <label className="font-bold">Reject Reason</label>
                         <p className="mt-2 mb-6 text-red-500">{data?.profile?.aadhar_card?.reject_reason}</p>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </section>
@@ -318,10 +314,6 @@ function DriverInfo() {
                         </>
                       ) : (
                         <div className="flex gap-4 items-end mt-2">
-                          <div>
-                            <p className="font-semibold pt-3">Status</p>
-                            <p className="text-green-500">Approved</p>
-                          </div>
                           <button
                             className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
                             onClick={() => approvalProcess("pending", { doc_type: "pan", doc_id: driverId })}
@@ -331,12 +323,12 @@ function DriverInfo() {
                         </div>
                       )}
                     </div>
-                    {data?.profile?.pan_card?.reject_reason && (
+                    {data?.profile?.pan_card?.reject_reason && data?.profile?.pan_card?.verification_status === "reject" ? (
                       <div className="mt-5">
                         <label className="font-bold">Reject Reason</label>
                         <p className="mt-2 mb-6 text-red-500">{data?.profile?.pan_card?.reject_reason}</p>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </section>
@@ -384,10 +376,6 @@ function DriverInfo() {
                         </>
                       ) : (
                         <div className="flex gap-4 items-end mt-2">
-                          <div>
-                            <p className="font-semibold pt-3">Status</p>
-                            <p className="text-green-500">Approved</p>
-                          </div>
                           <button
                             className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
                             onClick={() => approvalProcess("pending", { doc_type: "dl", doc_id: driverId })}
@@ -397,12 +385,12 @@ function DriverInfo() {
                         </div>
                       )}
                     </div>
-                    {data?.profile?.driver_card?.reject_reason && (
+                    {data?.profile?.driver_card?.reject_reason && data?.profile?.driver_card?.verification_status === "reject" ? (
                       <div className="mt-5">
                         <label className="font-bold">Reject Reason</label>
                         <p className="mt-2 mb-6 text-red-500">{data?.profile?.driver_card?.reject_reason}</p>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </section>
