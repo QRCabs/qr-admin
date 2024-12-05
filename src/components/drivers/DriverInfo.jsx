@@ -13,6 +13,7 @@ function DriverInfo() {
   // "65f6e6aedf626d1919aefe87" || ;
   const driverInfo = useSelector((state) => state?.drivers?.driverInfo);
   const driverApprove = useSelector((state) => state?.drivers?.driverApprove);
+  const driverActive = useSelector((state) => state?.drivers?.driverActive);
 
   const [data, setData] = useState({});
   const [approveType, setApproveType] = useState("");
@@ -92,8 +93,13 @@ function DriverInfo() {
         id,
       },
     });
-    getDriverInfo();
   };
+
+  useEffect(() => {
+    if (driverActive?.status && !driverActive?.loading) {
+      getDriverInfo();
+    }
+  }, [driverActive?.loading]);
 
   const isDriverDocApproved = () => {
     return (
@@ -232,7 +238,7 @@ function DriverInfo() {
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.aadhar_card?.verification_status)}`}>
                         {data?.profile?.aadhar_card?.verification_status}
                       </p>
-                      {data?.profile?.aadhar_card?.verification_status === "pending" && (
+                      {data?.profile?.aadhar_card?.verification_status === "pending" ? (
                         <>
                           <button
                             className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
@@ -247,6 +253,19 @@ function DriverInfo() {
                             Reject
                           </button>
                         </>
+                      ) : (
+                        <div className="flex gap-4 items-end mt-2">
+                          <div>
+                            <p className="font-semibold pt-3">Status</p>
+                            <p className="text-green-500">Approved</p>
+                          </div>
+                          <button
+                            className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
+                            onClick={() => approvalProcess("pending", { doc_type: "aadhar", doc_id: driverId })}
+                          >
+                            Revert to Pending
+                          </button>
+                        </div>
                       )}
                     </div>
                     {data?.profile?.aadhar_card?.reject_reason && (
@@ -282,7 +301,7 @@ function DriverInfo() {
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.pan_card?.verification_status)}`}>
                         {data?.profile?.pan_card?.verification_status}
                       </p>
-                      {data?.profile?.pan_card?.verification_status === "pending" && (
+                      {data?.profile?.pan_card?.verification_status === "pending" ? (
                         <>
                           <button
                             className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
@@ -297,6 +316,19 @@ function DriverInfo() {
                             Reject
                           </button>
                         </>
+                      ) : (
+                        <div className="flex gap-4 items-end mt-2">
+                          <div>
+                            <p className="font-semibold pt-3">Status</p>
+                            <p className="text-green-500">Approved</p>
+                          </div>
+                          <button
+                            className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
+                            onClick={() => approvalProcess("pending", { doc_type: "pan", doc_id: driverId })}
+                          >
+                            Revert to Pending
+                          </button>
+                        </div>
                       )}
                     </div>
                     {data?.profile?.pan_card?.reject_reason && (
@@ -335,7 +367,7 @@ function DriverInfo() {
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.driver_card?.verification_status)}`}>
                         {data?.profile?.driver_card?.verification_status}
                       </p>
-                      {data?.profile?.driver_card?.verification_status === "pending" && (
+                      {data?.profile?.driver_card?.verification_status === "pending" ? (
                         <>
                           <button
                             className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
@@ -350,6 +382,19 @@ function DriverInfo() {
                             Reject
                           </button>
                         </>
+                      ) : (
+                        <div className="flex gap-4 items-end mt-2">
+                          <div>
+                            <p className="font-semibold pt-3">Status</p>
+                            <p className="text-green-500">Approved</p>
+                          </div>
+                          <button
+                            className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
+                            onClick={() => approvalProcess("pending", { doc_type: "dl", doc_id: driverId })}
+                          >
+                            Revert to Pending
+                          </button>
+                        </div>
                       )}
                     </div>
                     {data?.profile?.driver_card?.reject_reason && (
