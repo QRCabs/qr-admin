@@ -24,7 +24,7 @@ function DriverInfo() {
     switch (val) {
       case "pending":
         return "text-yellow-400";
-      case "approve":
+      case "approved":
         return "text-green-500";
       case "rejected":
       case "reject":
@@ -78,7 +78,7 @@ function DriverInfo() {
   const approvalProcess = (type, doc) => {
     setApproveType(type);
     setApprovalDoc(doc);
-    if (type !== "approve") setApprovalPopup(true);
+    if (type !== "approved") setApprovalPopup(true);
     else
       approveDoc({
         ...doc,
@@ -234,7 +234,7 @@ function DriverInfo() {
                     <label className="font-bold">Aadhar Card No</label>
                     <p className="mt-2 mb-6">{data?.profile?.aadhar_card?.aadhar_card_number}</p>
                     <label className="font-bold">Verification Status</label>
-                    <div className={`flex gap-10 mt-4 ${data?.profile?.aadhar_card?.verification_status !== "approve" ? "" : ""}`}>
+                    <div className={`flex gap-10 mt-4 ${data?.profile?.aadhar_card?.verification_status !== "approved" ? "" : ""}`}>
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.aadhar_card?.verification_status)}`}>
                         {data?.profile?.aadhar_card?.verification_status}
                       </p>
@@ -242,7 +242,7 @@ function DriverInfo() {
                         <>
                           <button
                             className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
-                            onClick={() => approvalProcess("approve", { doc_type: "aadhar", doc_id: driverId })}
+                            onClick={() => approvalProcess("approved", { doc_type: "aadhar", doc_id: driverId })}
                           >
                             Approve
                           </button>
@@ -291,7 +291,7 @@ function DriverInfo() {
                     <label className="font-bold">Verification Status</label>
                     <div
                       className={`flex gap-10 mt-4 ${
-                        data?.profile?.pan_card?.verification_status !== "approve" ? "items-center justify-center" : ""
+                        data?.profile?.pan_card?.verification_status !== "approved" ? "items-center justify-center" : ""
                       }`}
                     >
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.pan_card?.verification_status)}`}>
@@ -301,7 +301,7 @@ function DriverInfo() {
                         <>
                           <button
                             className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
-                            onClick={() => approvalProcess("approve", { doc_type: "pan", doc_id: driverId })}
+                            onClick={() => approvalProcess("approved", { doc_type: "pan", doc_id: driverId })}
                           >
                             Approve
                           </button>
@@ -355,7 +355,7 @@ function DriverInfo() {
                     <label className="font-bold">DL No</label>
                     <p className="mt-2 mb-6">{data?.profile?.driver_card?.driver_card_number}</p>
                     <label className="font-bold">Verification Status</label>
-                    <div className={`flex gap-10 mt-4 ${data?.profile?.driver_card?.verification_status !== "approve" ? "" : ""}`}>
+                    <div className={`flex gap-10 mt-4 ${data?.profile?.driver_card?.verification_status !== "approved" ? "" : ""}`}>
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.driver_card?.verification_status)}`}>
                         {data?.profile?.driver_card?.verification_status}
                       </p>
@@ -363,7 +363,7 @@ function DriverInfo() {
                         <>
                           <button
                             className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
-                            onClick={() => approvalProcess("approve", { doc_type: "dl", doc_id: driverId })}
+                            onClick={() => approvalProcess("approved", { doc_type: "dl", doc_id: driverId })}
                           >
                             Approve
                           </button>
@@ -425,7 +425,7 @@ function DriverInfo() {
                         //   !data?.vehicleInfo[0]?.profile?.insurance_card_image_front
                         // }
                         className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
-                        onClick={() => approvalProcess("approve", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?.vehicleId })}
+                        onClick={() => approvalProcess("approved", { doc_type: "vehicle", doc_id: data?.vehicleInfo[0]?.vehicleId })}
                       >
                         Approve
                       </button>
