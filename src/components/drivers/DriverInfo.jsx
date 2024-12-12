@@ -119,6 +119,11 @@ function DriverInfo() {
     }));
     updateDriverStatus(id);
   };
+  const calculateAge = dateString => {
+    const birthDate = new Date(dateString);
+    const diff = Date.now() - birthDate.getTime();
+    return new Date(diff).getUTCFullYear() - 1970;
+  };
   return (
     <>
       {Object.keys(data).length === 0 ? (
@@ -211,6 +216,31 @@ function DriverInfo() {
                   </div>
                 </div>
               </div>
+              {data?.profile_image_status === "pending" ? (
+                        <>
+                          <button
+                            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-300"
+                            onClick={() => approvalProcess("approved", { doc_type: "dl", doc_id: driverId })}
+                          >
+                            Approve
+                          </button>
+                          <button
+                            className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-300"
+                            onClick={() => approvalProcess("reject", { doc_type: "dl", doc_id: driverId })}
+                          >
+                            Reject
+                          </button>
+                        </>
+                      ) : (
+                        <div className="flex gap-4 items-end mt-2">
+                          <button
+                            className="bg-yellow-500 text-white px-2 h-fit py-2 rounded-lg hover:bg-red-300"
+                            onClick={() => approvalProcess("pending", { doc_type: "dl", doc_id: driverId })}
+                          >
+                            Revert to Pending
+                          </button>
+                        </div>
+                      )}
             </section>
             {data?.profile?.aadhar_card && (
               <section className="border-t-2 mt-6">
@@ -352,8 +382,16 @@ function DriverInfo() {
                     className="mx-14 rounded-lg -rotate-90"
                   />
                   <div className="ml-12 mt-4">
-                    <label className="font-bold">DL No</label>
+                  <div className="flex"><div><label className="font-bold">DL No</label>
                     <p className="mt-2 mb-6">{data?.profile?.driver_card?.driver_card_number}</p>
+                    </div>
+                    {" "}
+                    <div>
+                      
+                    <label className="pl-5 font-bold">Driver Age</label>
+                    <p className="mt-2 mb-6 text-center">{`${calculateAge(data?.dob)} Years`}</p>
+                    </div>
+                    </div>
                     <label className="font-bold">Verification Status</label>
                     <div className={`flex gap-10 mt-4 ${data?.profile?.driver_card?.verification_status !== "approved" ? "" : ""}`}>
                       <p className={`capitalize font-semibold ${getStatusColor(data?.profile?.driver_card?.verification_status)}`}>
