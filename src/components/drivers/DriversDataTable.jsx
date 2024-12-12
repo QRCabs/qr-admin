@@ -19,7 +19,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
   };
 
   const [dateRange, setDateRange] = useState([null, null]);
-
+  const [noDataMsg,setNoDataMsg] = useState()
   // Function to update the date range in a single date picker
   const handleDateChange = (range) => {
     setDateRange(range);
@@ -37,24 +37,28 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
     setSelectedTab(filter);
 
     let obj = { ...initialValuesObj };
-
+   let NoDataMsg;
     switch (filter) {
       case "Blocked":
         obj.blocked = true;
+        NoDataMsg = "No drivers are currently blocked."
         break;
       case "Unblocked":
         obj.blocked = false;
+        NoDataMsg = "No drivers available right now."
         break;
       case "Verified":
         obj.activeDrivers = true;
+        NoDataMsg = "No verified drivers found."
         break;
       case "Unverified":
         obj.activeDrivers = false;
+        NoDataMsg = "No unverified drivers found."
         break;
       default:
         break;
     }
-
+    setNoDataMsg(NoDataMsg)
     setFilters(obj);
     handleGetData(obj);
   };
@@ -271,27 +275,6 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                   </svg>
                   Refresh
                 </button>
-                {/* <button
-                  type="button"
-                  className="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 "
-                >
-                  <svg
-                    className="w-4 h-4 mr-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-                    />
-                  </svg>
-                  Export
-                </button> */}
               </div>
             </div>
             <div className="flex mx-4 my-4">
@@ -364,7 +347,7 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                   </tr>
                 </thead>
                 <tbody>
-                  {data &&
+                  {data?.length > 0 ?
                     data.map((dt, i) => (
                       <tr className="border-b  hover:bg-gray-100" key={i}>
                         <td className="w-4 px-4 py-3">{i + 1}</td>
@@ -416,7 +399,14 @@ function DriversDataTable({ data, page, onPageChange, pageSize, totalRecords, in
                           </label>
                         </td>
                       </tr>
-                    ))}
+                    )) : 
+                    <div className="p-6 align-last">
+                    <div className="p-6 mr-2 bg-gray-100 dark:bg-gray-800 sm:rounded-lg align-middle">
+                    <p className="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">{data?.length == 0 && noDataMsg}</p>
+      
+                  </div>
+                  </div>
+                    }
                 </tbody>
               </table>
             </div>
